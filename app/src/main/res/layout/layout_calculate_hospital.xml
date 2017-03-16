@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/layout_hospital_consume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/label_hospital_consume"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/hospital_consume"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/line_hospital_consume"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/label_hospital_consume"
+                android:background="@drawable/line_vertical" />
+
+
+            <com.androidjp.lib_custom_view.edittext.ClearEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/line_hospital_consume"
+                android:layout_centerVertical="true"
+                android:hint="@string/set_hospital_consume"
+                android:inputType="number"
+                android:textSize="16sp"
+                />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/layout_hospital_days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/label_hospital_days"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/day_in_hospital"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/line_hospital_days"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/label_hospital_days"
+                android:background="@drawable/line_vertical" />
+
+
+            <com.androidjp.lib_custom_view.edittext.ClearEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/line_hospital_days"
+                android:layout_centerVertical="true"
+                android:hint="@string/set_day_in_hospital"
+                android:inputType="number"
+                android:textSize="16sp"
+                />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/layout_tardy_days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/label_tardy_days"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/day_delay_work"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/line_tardy_days"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/label_tardy_days"
+                android:background="@drawable/line_vertical" />
+
+
+            <com.androidjp.lib_custom_view.edittext.ClearEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/line_tardy_days"
+                android:layout_centerVertical="true"
+                android:hint="@string/set_day_delay_work"
+                android:inputType="number"
+                android:textSize="16sp"
+                />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/layout_nutrition_days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/label_nutrition_days"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/day_nutrition"
+                android:textSize="16sp"
+                />
+
+            <View
+                android:id="@+id/line_nutrition_days"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/label_nutrition_days"
+                android:background="@drawable/line_vertical" />
+
+
+            <com.androidjp.lib_custom_view.edittext.ClearEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/line_nutrition_days"
+                android:layout_centerVertical="true"
+                android:hint="@string/set_day_nutrition"
+                android:inputType="number"
+                android:textSize="16sp"
+                />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/layout_nursing_days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/label_nursing_days"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/day_nursing"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/line_nursing_days"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/label_nursing_days"
+                android:background="@drawable/line_vertical" />
+
+
+            <com.androidjp.lib_custom_view.edittext.ClearEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/line_nursing_days"
+                android:layout_centerVertical="true"
+                android:hint="@string/set_day_nursing"
+                android:inputType="number"
+                android:textSize="16sp"
+                />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

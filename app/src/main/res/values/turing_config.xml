@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--图灵机器人API相关 key-->
+    <string name="speak_recognize_baidu_voice_api_key">204L2nmyEy4AiaKW84xZGZa7</string>
+    <string name="speak_recognize_baidu_voice_secret_key">5dfb2b5685f3af90b6c1ee8fae944d2d</string>
+    <string name="speak_recognize_baidu_voice_app_id">9265346</string>
+    <string name="turing_api_key">9e44705de6ba4a42965aedc61d85141c</string>
+    <string name="turing_secret">65b89d622752a812</string>
+
+</resources>

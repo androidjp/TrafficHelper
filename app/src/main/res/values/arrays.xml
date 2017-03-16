@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--string 数组相关-->
+    <string-array name="hurlevel_array">
+        <item>不到十级</item>
+        <item>十级</item>
+        <item>九级</item>
+        <item>八级</item>
+        <item>七级</item>
+        <item>六级</item>
+        <item>五级</item>
+        <item>四级</item>
+        <item>三级</item>
+        <item>二级</item>
+        <item>一级</item>
+        <item>死亡</item>
+    </string-array>
+
+    <string-array name="has_spouse">
+        <item>无</item>
+        <item>有</item>
+    </string-array>
+
+    <string-array name="id_type">
+        <item>城镇</item>
+        <item>农村</item>
+    </string-array>
+    <string-array name="traffic_responsibility">
+        <item>无责</item>
+        <item>次要责任</item>
+        <item>同等责任</item>
+        <item>主要责任</item>
+        <item>全责</item>
+    </string-array>
+    <string-array name="vehicle">
+        <item>机动车</item>
+        <item>非机动车</item>
+        <item>行人</item>
+    </string-array>
+
+    <string-array name="relation_array">
+        <item>子女</item>
+        <item>父母</item>
+    </string-array>
+
+</resources>

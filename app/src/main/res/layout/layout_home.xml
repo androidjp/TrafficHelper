@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.androidjp.lib_jpuneng_slidingmenu.QQSlidingMenu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    app:rightPadding="140dp"
+    android:id="@+id/menu_main"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/blue"
+        >
+
+        <FrameLayout
+            android:id="@+id/frame_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/frame_content"
+            android:background="@color/default_bg"
+            >
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</com.androidjp.lib_jpuneng_slidingmenu.QQSlidingMenu>

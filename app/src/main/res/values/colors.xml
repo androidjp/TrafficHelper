@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#69a6f5</color>
+    <color name="colorPrimaryDark">#69a6f5</color>
+    <color name="colorAccent">#df5987</color>
+
+    <color name="btn_idle">#efb04b</color>
+    <color name="btn_idle_pressed">#d0efb04b</color>
+    <color name="btn_complete">#b9d46f</color>
+    <color name="btn_complete_pressed">#d0b9d46f</color>
+    <color name="btn_error">#df5987</color>
+    <color name="btn_error_pressed">#d0df5987</color>
+
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageButton
+        android:id="@+id/ibtn_audio"
+        android:layout_width="48dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:src="@drawable/audio"
+        android:textColor="@color/white" />
+
+    <com.androidjp.lib_custom_view.edittext.ClearEditText
+        android:id="@+id/et_consult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_margin="12dp"
+        android:layout_toLeftOf="@+id/ibtn_send"
+        android:layout_toRightOf="@+id/ibtn_audio"
+        android:background="@drawable/bg_consult_edit"
+        android:maxHeight="70dp"
+        android:padding="8dp" />
+
+    <ImageButton
+        android:id="@+id/ibtn_send"
+        android:layout_width="48dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:src="@drawable/send"
+        android:textColor="@color/white" />
+</RelativeLayout>

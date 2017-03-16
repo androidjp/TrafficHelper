@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layout_slide_up"
+    android:background="@drawable/bg_layout_consult"
+    android:layout_marginTop="?attr/actionBarSize"
+    >
+
+
+    <RelativeLayout
+        android:id="@+id/layout_consult"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="80dp"
+        >
+
+
+    </RelativeLayout>
+
+
+    <com.androidjp.lib_custom_view.edittext.ClearEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_consult"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_que"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center|bottom"
+        android:layout_margin="12dp"
+        android:src="@drawable/audio"
+        />
+
+</android.support.design.widget.CoordinatorLayout>

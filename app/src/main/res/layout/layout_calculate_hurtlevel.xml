@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/layout_hurtlevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/label_hurtlevel"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/hurtlevel"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/line_hurtlevel"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/label_hurtlevel"
+                android:background="@drawable/line_vertical" />
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_hurtlevel"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_toLeftOf="@+id/btn_question"-->
+                <!--android:layout_toRightOf="@id/line_hurtlevel"-->
+                <!--android:text="一级"-->
+                <!--android:textSize="16sp" />-->
+
+            <!--仿饿了么-->
+            <com.androidjp.lib_custom_view.selector.JPSelectView
+                android:id="@+id/tv_hurtlevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:hintText="@string/set_hurtlevel"
+                app:selectViewType="1"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/btn_question"
+                android:layout_toRightOf="@+id/line_hurtlevel"
+                />
+
+            <ImageView
+                android:id="@+id/btn_question"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/bg_question"
+                android:layout_marginLeft="12dp"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_sister_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/label_sister_count"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/brothers"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/line_sister_count"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/label_sister_count"
+                android:background="@drawable/line_vertical" />
+
+
+            <com.androidjp.lib_custom_view.selector.JPSelectView
+                android:id="@+id/tv_sister_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/line_sister_count"
+                app:hintText="@string/set_brothers"
+                app:selectViewType="0"
+                app:minCount="0"
+                app:maxCount="99"
+                />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_has_spouse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/label_has_spouse"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/hasWife"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/line_has_spouse"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/label_has_spouse"
+                android:background="@drawable/line_vertical" />
+
+            <com.androidjp.lib_custom_view.selector.JPSelectView
+                android:id="@+id/tv_has_spouse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/line_has_spouse"
+                app:selectViewType="1"
+                app:hintText="@string/set_hasWife"
+                 />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_id_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/label_id_type"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/id_properties"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/line_id_type"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/label_id_type"
+                android:background="@drawable/line_vertical" />
+
+            <com.androidjp.lib_custom_view.selector.JPSelectView
+                android:id="@+id/tv_id_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/line_id_type"
+                android:textSize="16sp"
+                app:selectViewType="1"
+                app:hintText="@string/set_id_properties"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_responsibility"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/label_responsibility"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/responsibility"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/line_responsibility"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/label_responsibility"
+                android:background="@drawable/line_vertical" />
+
+            <com.androidjp.lib_custom_view.selector.JPSelectView
+                android:id="@+id/tv_responsibility"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/line_responsibility"
+                app:hintText="@string/set_responsibility"
+                app:selectViewType="1"
+                />
+
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_driving_tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/label_driving_tools"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/vehicle"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/line_driving_tools"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/label_driving_tools"
+                android:background="@drawable/line_vertical" />
+
+            <com.androidjp.lib_custom_view.selector.JPSelectView
+                android:id="@+id/tv_driving_tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/line_driving_tools"
+                app:hintText="@string/set_vehicle"
+                app:selectViewType="1"
+                 />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

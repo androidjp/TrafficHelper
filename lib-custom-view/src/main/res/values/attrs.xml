@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircleView">
+        <attr name="circle_color" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="LinkTextView">
+        <attr name="anim" format="boolean"/>
+    </declare-styleable>
+
+
+    <!--自定义沉浸式TitleBar-->
+    <declare-styleable name="ImmerseTitleBar">
+        <!--Title部分-->
+        <attr name="titleText" format="string"/>
+        <attr name="titleColor" format="color"/>
+        <attr name="titleSize" format="dimension"/>
+
+        <!--左边部分-->
+        <attr name="leftBtnText" format="string"/><!--左侧按钮文本-->
+        <attr name="leftBtnBg" format="reference|color"/><!--左侧按钮背景-->
+        <attr name="leftBtnTextColor" format="color"/><!--左侧按钮文件颜色-->
+        <attr name="leftBtnTextSize" format="dimension"/><!--左侧按钮文字大小-->
+        <attr name="leftIcon" format="reference"/><!--左侧图标-->
+        <attr name="leftIconBg" format="reference|color"/><!--左侧-->
+        <attr name="leftLayout" format="reference"/><!--左侧自定义布局-->
+
+        <!--右边部分-->
+        <attr name="rightBtnText" format="string"/>
+        <attr name="rightBtnBg" format="reference|color"/>
+        <attr name="rightBtnTextColor" format="color"/>
+        <attr name="rightBtnTextSize" format="dimension"/>
+        <attr name="rightIcon" format="reference"/>
+        <attr name="rightIconBg" format="reference|color"/>
+        <attr name="rightLayout" format="reference"/>
+
+    </declare-styleable>
+
+
+    <declare-styleable name="JPwdInputView">
+        <attr name="contentSizePersentage" format="float"/><!--内容占方格百分比-->
+        <attr name="contentColor" format="color"/>
+        <attr name="dotColor" format="color"/>
+        <attr name="borderColor" format="color"/>
+
+        <attr name="radiuSize" format="dimension"/><!--圆角尺度-->
+        <attr name="borderWidth" format="dimension"/><!--边框厚度-->
+        <attr name="contentBlod" format="boolean"/><!--文本是否加粗-->
+        <attr name="showContent" format="boolean"/><!--是否允许显示输入内容-->
+        <attr name="justNumber" format="boolean"/><!--是否只允许输入数字-->
+
+        <attr name="inputCount" format="integer"/><!--输入框数量-->
+    </declare-styleable>
+
+    <!--简单的自定义Banner，基于ViewPager-->
+    <declare-styleable name="JBannerLayout">
+        <attr name="selectedIndicatorColor" format="color|reference" />
+        <attr name="unSelectedIndicatorColor" format="color|reference" />
+        <attr name="indicatorShape" format="enum">
+            <enum name="rect" value="0" />
+            <enum name="oval" value="1" />
+        </attr>
+
+        <attr name="selectedIndicatorHeight" format="dimension|reference" />
+        <attr name="selectedIndicatorWidth" format="dimension|reference" />
+
+        <attr name="unSelectedIndicatorHeight" format="dimension|reference" />
+        <attr name="unSelectedIndicatorWidth" format="dimension|reference" />
+
+        <attr name="indicatorPosition" format="enum">
+            <enum name="centerBottom" value="0" />
+            <enum name="rightBottom" value="1" />
+            <enum name="leftBottom" value="2" />
+            <enum name="centerTop" value="3" />
+            <enum name="rightTop" value="4" />
+            <enum name="leftTop" value="5" />
+        </attr>
+
+        <attr name="indicatorSpace" format="dimension|reference" />
+        <attr name="indicatorMargin" format="dimension|reference" />
+        <attr name="autoPlayDuration" format="integer|reference" />
+        <attr name="scrollDuration" format="integer|reference" />
+        <attr name="isAutoPlay" format="boolean"/>
+        <attr name="defaultImage" format="integer|reference"/>
+    </declare-styleable>
+
+    <!--自定义View ：仿饿了么"加入购物车"的数量选择框-->
+    <declare-styleable name="JPSelectView">
+        <attr name="selectViewType" format="integer"/>
+        <attr name="addDisableBgColor" format="color"/>
+        <attr name="addDisableFgColor" format="color"/>
+        <attr name="addEnableBgColor" format="color"/>
+        <attr name="addEnableFgColor" format="color"/>
+        <attr name="subDisableBgColor" format="color"/>
+        <attr name="subDisableFgColor" format="color"/>
+        <attr name="subEnableBgColor" format="color"/>
+        <attr name="subEnableFgColor" format="color"/>
+        <attr name="circleStrokeWidth" format="dimension"/>
+        <attr name="count" format="integer"/>
+        <attr name="minCount" format="integer"/>
+        <attr name="maxCount" format="integer"/>
+        <attr name="gapBetweenCircle" format="dimension"/>
+        <attr name="hintTextSize" format="dimension"/>
+        <attr name="hintBgColor" format="color"/>
+        <attr name="hintFgColor" format="color"/>
+        <attr name="hintBgRoundValue" format="dimension"/>
+        <attr name="hintText" format="string"/>
+        <attr name="isAddFillMode" format="boolean"/>
+        <attr name="isDelFillMode" format="boolean"/>
+        <attr name="lineWidth" format="dimension"/>
+        <attr name="numTextSize" format="dimension"/>
+        <attr name="radius" format="dimension"/>
+        <attr name="ignoreHintArea" format="boolean"/>
+        <attr name="perAnimDuration" format="integer"/>
+    </declare-styleable>
+
+</resources>

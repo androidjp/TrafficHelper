@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <include layout="@layout/toolbar"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/blue"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <include layout="@layout/layout_calculate_region"/>
+            <include layout="@layout/layout_calculate_hurtlevel"/>
+            <include layout="@layout/layout_calculate_hospital"/>
+            <include layout="@layout/layout_calculate_relatives"/>
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <!--<include layout="@layout/layout_consult"/>-->
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_calculate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_margin="12dp"
+        app:backgroundTint="@color/green"
+        app:borderWidth="20dp"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:layout_behavior="com.androidjp.traffichelper.adapter.behavior.FABBottomUpDownBehavior"
+        app:srcCompat="@drawable/ic_money" />
+    <!--app:layout_behavior="com.androidjp.traffichelper.home.behavior.FloatingBehavior"-->
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_consult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|bottom"
+        android:layout_margin="12dp"
+        app:backgroundTint="@color/orange"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:layout_behavior="com.androidjp.traffichelper.adapter.behavior.FABBottomUpDownBehavior"
+        app:srcCompat="@drawable/consult" />
+
+
+</android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="com.androidjp.traffichelper.home.behavior.MyBehavior"
+    >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/frame_reclist"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="@drawable/bg_consult_edit"
+        android:padding="6dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/consult_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </FrameLayout>
+
+    <include layout="@layout/layout_consult_edit"/>
+
+</LinearLayout>

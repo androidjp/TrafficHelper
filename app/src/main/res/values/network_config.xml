@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="SERVER_HOST">"http://localhost:8080/SpringDemo"</string>
+    <string name="LOGIN_PATH">"servlets/LoginServlet"</string>
+    <string name="REGISTER_PATH">"servlets/RegisterServlet"</string>
+    <string name="USER_MANAGER_PATH">"servlets/UserManager"</string>
+    <string name="RECORD_PATH">"servlets/RecordServlet"</string>
+    <string name="LOCATION_PATH">servlets/LocationServlet</string>
+</resources>

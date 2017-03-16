@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--右间距-->
+    <attr name="rightPadding" format="dimension" />
+    <!--左间距-->
+    <attr name="leftPadding" format="dimension" />
+    <!--slideMenu的方向-->
+    <attr name="slide_gravity" format="integer" />
+
+    <!--HScrollSlidingMenu 相关属性-->
+    <declare-styleable name="SimpleSlidingMenu">
+        <attr name="rightPadding" />
+    </declare-styleable>
+
+    <declare-styleable name="QQSlidingMenu">
+        <attr name="rightPadding" />
+    </declare-styleable>
+
+    <declare-styleable name="SuperSlidingMenu">
+
+        <attr name="rightPadding" />
+        <attr name="leftPadding" />
+        <attr name="slide_gravity" />
+        <!--菜单滑动样式：0：简单 1：抽屉 2：内侧抽屉-->
+        <attr name="left_sliding_style" format="integer"/>
+        <attr name="right_sliding_style" format="integer"/>
+    </declare-styleable>
+</resources>

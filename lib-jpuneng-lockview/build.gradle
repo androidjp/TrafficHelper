@@ -1,0 +1,61 @@
+apply plugin: 'com.android.library'
+//
+//ext {
+//    bintrayRepo = 'ui-custom-libs'
+//    bintrayName = 'jlockview'
+//
+//    publishedGroupId = 'com.androidjp.ui_costom_libs'
+//    libraryName = 'jlockview'
+//    artifact = 'jlockview'
+//
+//    libraryDescription = 'A common LockView on Android'
+//
+//    siteUrl = 'https://github.com/androidjp/JLockView'
+//    gitUrl = 'https://github.com/androidjp/JLockView.git'
+//
+//    libraryVersion = '0.9.3'
+//
+//    developerId = 'androidjp'
+//    developerName = 'Junpeng Wu'
+//    developerEmail = '1049578026@qq.com'
+//
+//    licenseName = 'The Apache Software License, Version 2.0'
+//    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//    allLicenses = ["Apache-2.0"]
+//}
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 24
+        versionCode 1
+        versionName "0.9.3"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets{
+        main{
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:25.0.1'
+}
+
+tasks.withType(Javadoc){
+    options.encoding = "UTF-8"
+}
+
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

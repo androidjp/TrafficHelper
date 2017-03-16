@@ -1,0 +1,1 @@
+include ':app', ':lib-sweet-alert', ':lib-common-util', ':lib-genericity-mvp', ':lib-custom-view', ':lib-jpuneng-lockview', ':lib-jpuneng-recyclerview', ':lib-jpuneng-slidingmenu', ':lib-google-mvp', ':lib-baidu-asr', ':lib-turing-nlp'

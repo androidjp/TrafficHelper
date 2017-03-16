@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/TrafficHelper.iml" filepath="$PROJECT_DIR$/TrafficHelper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-baidu-asr/lib-baidu-asr.iml" filepath="$PROJECT_DIR$/lib-baidu-asr/lib-baidu-asr.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-common-util/lib-common-util.iml" filepath="$PROJECT_DIR$/lib-common-util/lib-common-util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-custom-view/lib-custom-view.iml" filepath="$PROJECT_DIR$/lib-custom-view/lib-custom-view.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-genericity-mvp/lib-genericity-mvp.iml" filepath="$PROJECT_DIR$/lib-genericity-mvp/lib-genericity-mvp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-google-mvp/lib-google-mvp.iml" filepath="$PROJECT_DIR$/lib-google-mvp/lib-google-mvp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-jpuneng-lockview/lib-jpuneng-lockview.iml" filepath="$PROJECT_DIR$/lib-jpuneng-lockview/lib-jpuneng-lockview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-jpuneng-recyclerview/lib-jpuneng-recyclerview.iml" filepath="$PROJECT_DIR$/lib-jpuneng-recyclerview/lib-jpuneng-recyclerview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-jpuneng-slidingmenu/lib-jpuneng-slidingmenu.iml" filepath="$PROJECT_DIR$/lib-jpuneng-slidingmenu/lib-jpuneng-slidingmenu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-sweet-alert/lib-sweet-alert.iml" filepath="$PROJECT_DIR$/lib-sweet-alert/lib-sweet-alert.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-turing-nlp/lib-turing-nlp.iml" filepath="$PROJECT_DIR$/lib-turing-nlp/lib-turing-nlp.iml" />
+    </modules>
+  </component>
+</project>

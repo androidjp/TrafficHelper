@@ -1,0 +1,120 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'///dagger2 配置
+//apply plugin: 'realm-android'///realm配置
+
+android {
+
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    // 取消掉系统对.9图片的检查
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
+    defaultConfig {
+        applicationId "com.androidjp.traffichelper"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            minifyEnabled false
+        }
+    }
+//
+//    //====只把 armabi 打包进apk=====================
+//    splits {
+//        abi {
+//            enable true
+//            reset()
+//            include 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a' //select ABIs to build APKs for
+//            universalApk true //generate an additional APK that contains all the ABIs
+//        }
+//    }
+//
+//    // map for the version code
+//    project.ext.versionCodes = ['armeabi': 1, 'armeabi-v7a': 2, 'arm64-v8a': 3, 'mips': 5, 'mips64': 6, 'x86': 8, 'x86_64': 9]
+//
+//    android.applicationVariants.all { variant ->
+//        // assign different version code for each output
+//        variant.outputs.each { output ->
+//            output.versionCodeOverride =
+//                    project.ext.versionCodes.get(output.getFilter(com.android.build.OutputFile.ABI), 0) * 1000000 + android.defaultConfig.versionCode
+//        }
+//    }
+//    //====end -- 只把 armabi 打包进apk=====================
+
+}
+
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    //滑动退出相关库
+    compile "me.imid.swipebacklayout.lib:library:$rootProject.swipebackVersion"
+    //dagger2 依赖注入框架依赖
+    compile "com.google.dagger:dagger:$rootProject.daggerVersion"
+    apt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    // design 相关库
+    compile "com.android.support:design:$rootProject.supportLibraryVersion"
+    // JUnit单元测试
+    testCompile "junit:junit:$rootProject.junitVersion"
+    // Logger 日志显示库
+    compile 'com.orhanobut:logger:1.8'
+    // 依赖注入框架之 butterknife
+    compile "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
+    // 扁平化
+    // 组件扩展库：滑动返回的Activity
+    compile 'com.github.liuguangqiang.swipeback:library:1.0.2'
+    // UI库：自带progress 的button
+    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.3'
+    // UI库：带有下拉+上拉的RecyclerView，更有item左右滑动相关操作（根build.gradle需配置maven { url "https://jitpack.io" }）
+    //    compile 'com.github.jdsjlzx:LRecyclerView:1.2.9'
+    // 图片加载框架：google - Glide
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    // Glide扩展库（注意需要添加仓库：mavenCentral()）
+    compile 'jp.wasabeef:glide-transformations:2.0.1'
+    // 如果想要使用 GPU Filters
+    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.3.0'
+    //     UI库：炫酷的动画菜单栏
+    //    compile 'com.yalantis:sidemenu:1.0'
+    // "炫酷的动画菜单栏"所需依赖 ，需配置maven { url "https://jitpack.io" }
+    //    compile ('com.github.ozodrukh:CircularReveal:2.0.1'){
+    //        transitive = true;
+    //    }
+    //google - guava
+    compile "com.google.guava:guava:$rootProject.guavaVersion"
+    // 网络请求库：Retrofit2
+    compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    // RxJava RxAndroid 异步库
+    compile "io.reactivex.rxjava2:rxjava:$rootProject.rxjavaVersion"
+    compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
+    // 更好的RelativeLayout -- ConstraintLayout
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
+    // 方便网络请求查看的依赖库（chuck）【只是……需要用到 25.1.1版本的 support库】
+    //    debugCompile 'com.readystatesoftware.chuck:library:1.0.4'
+    //    releaseCompile 'com.readystatesoftware.chuck:library-no-op:1.0.4'
+    compile project(':lib-common-util')
+    compile project(':lib-sweet-alert')
+    compile project(':lib-custom-view')
+    compile project(':lib-google-mvp')
+    compile project(':lib-jpuneng-slidingmenu')
+    compile project(':lib-jpuneng-recyclerview')
+    compile files('libs/AMap_Location_V3.2.1_20161228.jar')
+    compile 'com.skyfishjy.ripplebackground:library:1.0.1'
+    compile project(':lib-baidu-asr')
+    compile project(path: ':lib-turing-nlp')
+}
