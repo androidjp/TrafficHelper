@@ -18,6 +18,7 @@ import com.androidjp.lib_turing_nlp.ChatManager;
 import com.androidjp.traffichelper.R;
 import com.androidjp.traffichelper.data.pojo.Dialogue;
 import com.baidu.speech.VoiceRecognitionService;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,8 +39,8 @@ import static com.androidjp.lib_baidu_asr.asr.ASRStatus.STATUS_WaitingReady;
  */
 
 public class ConsultPresenter implements ConsultContract.Presenter
-    ,RecognitionListener
-        ,ChatManager.ChatListener
+        , RecognitionListener
+        , ChatManager.ChatListener
 {
     private Context mContext;
     private SoftReference<ConsultContract.View> mView;
@@ -50,28 +51,32 @@ public class ConsultPresenter implements ConsultContract.Presenter
     private static final int EVENT_ERROR = 11;
 
 
-    public ConsultPresenter(Context mContext,ConsultContract.View mView) {
+    public ConsultPresenter(Context mContext, ConsultContract.View mView) {
         this.mContext = mContext;
-        this.mView = new SoftReference<ConsultContract.View>(mView);
+        this.mView = new SoftReference<>(mView);
     }
 
     @Override
     public void sendQuestion(String question) {
-        Dialogue que = new Dialogue("-1", null,question);
-        if (this.mView.get()!=null){
+        Dialogue que = new Dialogue("-1", null, question);
+        if (this.mView.get() != null) {
             this.mView.get().showQuestion(que);
+            this.mView.get().showSpeechText("");
         }
-
+        Logger.d("sendQuestion ---> 开始判断");
         ///TODO: 传给图灵机器人 理赔姐 ，让其处理
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (Settings.System.canWrite(mContext)) {
                 // Do stuff here
+                Logger.d("sendQuestion ---> ChatManager开始运作");
+
                 ChatManager.getInstance(mContext)
                         .init(mContext.getResources().getString(R.string.turing_api_key), mContext.getResources().getString(R.string.turing_secret))
                         .setChatListener(this).sendDialogue(question);
-            }
-            else {
+                Logger.d("sendQuestion ---> ChatManager发送了请求数据了");
+
+            } else {
                 Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
                 intent.setData(Uri.parse("package:" + mContext.getPackageName()));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -83,14 +88,21 @@ public class ConsultPresenter implements ConsultContract.Presenter
 
     @Override
     public void start() {
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.System.canWrite(mContext)) {
+                Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                intent.setData(Uri.parse("package:" + mContext.getPackageName()));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+            }
+        }
     }
 
     @Override
     public void startYuYin() {
-        if (mView !=null)
+        if (mView != null)
             mView.get().showSpeechText("");
-        BaiduASR.startASR((Activity)mContext, this);
+        BaiduASR.startASR((Activity) mContext, this);
     }
 
     @Override
@@ -107,37 +119,37 @@ public class ConsultPresenter implements ConsultContract.Presenter
     public void toggleYuYin() {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext);
         boolean api = sp.getBoolean("api", false);
-        Log.i("MainPresenter","toggleYuYin() --> SharedPreferences 可读");
+        Log.i("MainPresenter", "toggleYuYin() --> SharedPreferences 可读");
         if (api) {
             switch (status) {
                 case STATUS_None:
                     startYuYin();
                     status = STATUS_WaitingReady;
-                    if (mView !=null)
+                    if (mView != null)
                         mView.get().showSpeechBtnText("取消");
                     break;
                 case STATUS_WaitingReady:
                     cancelYuYin();
                     status = STATUS_None;
-                    if (mView !=null)
+                    if (mView != null)
                         mView.get().showSpeechBtnText("开始");
                     break;
                 case STATUS_Ready:
                     cancelYuYin();
                     status = STATUS_None;
-                    if (mView !=null)
+                    if (mView != null)
                         mView.get().showSpeechBtnText("开始");
                     break;
                 case STATUS_Speaking:
                     stopAndDeal();
                     status = STATUS_Recognition;
-                    if (mView !=null)
+                    if (mView != null)
                         mView.get().showSpeechBtnText("识别中");
                     break;
                 case STATUS_Recognition:
                     cancelYuYin();
                     status = STATUS_None;
-                    if (mView !=null)
+                    if (mView != null)
                         mView.get().showSpeechBtnText("开始");
                     break;
             }
@@ -158,14 +170,14 @@ public class ConsultPresenter implements ConsultContract.Presenter
     @Override
     public void onReadyForSpeech(Bundle params) {
         status = STATUS_Ready;
-        Log.d("onReadyForSpeech()","准备就绪，可以开始说话");
+        Log.d("onReadyForSpeech()", "准备就绪，可以开始说话");
     }
 
     @Override
     public void onBeginningOfSpeech() {
         time = System.currentTimeMillis();
         status = STATUS_Speaking;
-        Log.d("onBeginningOfSpeech()","检测到用户的已经开始说话");
+        Log.d("onBeginningOfSpeech()", "检测到用户的已经开始说话");
     }
 
     @Override
@@ -181,7 +193,7 @@ public class ConsultPresenter implements ConsultContract.Presenter
     public void onEndOfSpeech() {
         speechEndTime = System.currentTimeMillis();
         status = STATUS_Recognition;
-        Log.d("onEndOfSpeech()","检测到用户的已经停止说话");
+        Log.d("onEndOfSpeech()", "检测到用户的已经停止说话");
         mView.get().showSpeechBtnText("识别中");
     }
 
@@ -220,7 +232,7 @@ public class ConsultPresenter implements ConsultContract.Presenter
                 break;
         }
         sb.append(":" + error);
-        Log.e("MainPresenter.onError()","识别失败：" + sb.toString());
+        Log.e("MainPresenter.onError()", "识别失败：" + sb.toString());
         mView.get().showSpeechBtnText("开始");
     }
 
@@ -229,12 +241,12 @@ public class ConsultPresenter implements ConsultContract.Presenter
         long end2finish = System.currentTimeMillis() - speechEndTime;
         status = STATUS_None;
         ArrayList<String> nbest = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-        Log.d("onResults()","识别成功：" + Arrays.toString(nbest.toArray(new String[nbest.size()])));
+        Log.d("onResults()", "识别成功：" + Arrays.toString(nbest.toArray(new String[nbest.size()])));
         String json_res = results.getString("origin_result");
         try {
-            Log.d("onResults()","origin_result=\n" + new JSONObject(json_res).toString(4));
+            Log.d("onResults()", "origin_result=\n" + new JSONObject(json_res).toString(4));
         } catch (Exception e) {
-            Log.d("onResults()","origin_result=[warning: bad json]\n" + json_res);
+            Log.d("onResults()", "origin_result=[warning: bad json]\n" + json_res);
         }
         mView.get().showSpeechBtnText("开始");
         String strEnd2Finish = "";
@@ -251,7 +263,7 @@ public class ConsultPresenter implements ConsultContract.Presenter
     public void onPartialResults(Bundle partialResults) {
         ArrayList<String> nbest = partialResults.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         if (nbest.size() > 0) {
-            Log.d("onPartialResults()","~临时识别结果：" + Arrays.toString(nbest.toArray(new String[0])));
+            Log.d("onPartialResults()", "~临时识别结果：" + Arrays.toString(nbest.toArray(new String[0])));
             mView.get().showSpeechText(nbest.get(0));
         }
     }
@@ -261,24 +273,24 @@ public class ConsultPresenter implements ConsultContract.Presenter
         switch (eventType) {
             case EVENT_ERROR:
                 String reason = params.get("reason") + "";
-                Log.e("MainPresenter.onEvent()","EVENT_ERROR, " + reason);
+                Log.e("MainPresenter.onEvent()", "EVENT_ERROR, " + reason);
                 break;
             case VoiceRecognitionService.EVENT_ENGINE_SWITCH:
                 int type = params.getInt("engine_type");
-                Log.d("MainPresenter.onEvent()","*引擎切换至" + (type == 0 ? "在线" : "离线"));
+                Log.d("MainPresenter.onEvent()", "*引擎切换至" + (type == 0 ? "在线" : "离线"));
                 break;
         }
     }
 
     @Override
     public void onChatSuccess(String s) {
-        if (this.mView!=null){
-            try{
+        if (this.mView != null) {
+            try {
                 JSONObject jsonObject = new JSONObject(s);
                 String answer = jsonObject.getString("text");
-                if (this.mView!=null)
-                this.mView.get().showAnswer(new Dialogue(null,null,answer));
-            }catch (JSONException e) {
+                if (this.mView != null)
+                    this.mView.get().showAnswer(new Dialogue(null, null, answer));
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
@@ -286,8 +298,7 @@ public class ConsultPresenter implements ConsultContract.Presenter
 
     @Override
     public void onChatFail(int i, String s) {
-        if (mView!=null)
-            mView.get().showAnswer(new Dialogue(null, null ,i+" , "+s));
+        if (mView != null)
+            mView.get().showAnswer(new Dialogue(null, null, i + " , " + s));
     }
-
 }

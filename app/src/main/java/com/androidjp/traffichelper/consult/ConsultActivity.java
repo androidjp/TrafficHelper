@@ -84,8 +84,8 @@ public class ConsultActivity extends SwipeBackActivity {
 
         /// Level 23 动态申请权限
         PermissionUtil.checkForPermission(this, permissions);
-        PermissionUtil.checkForPermission(this, permissions2);
-        PermissionUtil.checkForPermission(this, permissions3);
+//        PermissionUtil.checkForPermission(this, permissions2);
+//        PermissionUtil.checkForPermission(this, permissions3);
 
     }
 

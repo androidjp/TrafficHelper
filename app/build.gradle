@@ -116,5 +116,5 @@ dependencies {
     compile files('libs/AMap_Location_V3.2.1_20161228.jar')
     compile 'com.skyfishjy.ripplebackground:library:1.0.1'
     compile project(':lib-baidu-asr')
-    compile project(path: ':lib-turing-nlp')
+    compile project(':lib-turing-nlp')
 }
