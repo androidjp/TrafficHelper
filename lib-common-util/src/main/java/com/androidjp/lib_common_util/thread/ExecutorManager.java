@@ -1,7 +1,10 @@
 package com.androidjp.lib_common_util.thread;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -35,13 +38,14 @@ public class ExecutorManager {
 
     /**
      * 使用 FixedThreadPool 执行任务
-     * @param runnable
+     * @param callable
      */
-    public void execTaskByFixed(Runnable runnable){
+    public <T> Future<T> execTaskByFixed(Callable<T> callable){
         if (mFixedThreadPool==null){
-            mFixedThreadPool = Executors.newFixedThreadPool(20);
+            mFixedThreadPool = Executors.newFixedThreadPool(10);
         }
-        mFixedThreadPool.execute(runnable);
+//        mFixedThreadPool.execute(runnable);
+        return mFixedThreadPool.submit(callable);
     }
 
 

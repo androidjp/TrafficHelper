@@ -3,6 +3,7 @@ package com.androidjp.traffichelper.home;
 import com.androidjp.lib_google_mvp.BasePresenter;
 import com.androidjp.lib_google_mvp.BaseView;
 import com.androidjp.traffichelper.data.pojo.Record;
+import com.androidjp.traffichelper.data.pojo.RecordRes;
 
 /**
  * MVP
@@ -15,6 +16,7 @@ public class MainContract {
     public interface View extends BaseView<Presenter>{
         void prepareCalculateMsg();
         void showLocationMsg(String location);
+        void showRecordResult(RecordRes recordRes);
     }
 
     public interface Presenter extends BasePresenter{

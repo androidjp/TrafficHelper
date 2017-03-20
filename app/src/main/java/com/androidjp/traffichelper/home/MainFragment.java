@@ -1,5 +1,6 @@
 package com.androidjp.traffichelper.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,21 +8,33 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.androidjp.lib_custom_view.selector.JPSelectView;
+import com.androidjp.lib_great_recyclerview.base.BaseRecAdapter;
+import com.androidjp.lib_great_recyclerview.base.BaseRecViewDivider;
+import com.androidjp.lib_great_recyclerview.base.BaseViewHolder;
+import com.androidjp.lib_great_recyclerview.base.OnItemClickListener;
 import com.androidjp.traffichelper.R;
+import com.androidjp.traffichelper.adapter.RelativesMsgItemHolder;
 import com.androidjp.traffichelper.consult.ConsultActivity;
 import com.androidjp.traffichelper.data.pojo.Record;
-import com.androidjp.traffichelper.demo.DemoActivity;
+import com.androidjp.traffichelper.data.pojo.RecordRes;
+import com.androidjp.traffichelper.data.pojo.RelativeItemMsg;
 import com.dd.CircularProgressButton;
+import com.orhanobut.logger.Logger;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -149,7 +162,16 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
     View lineFamilyCustom;
     @Bind(R.id.tv_family_custom)
     TextView tvFamilyCustom;
+    @Bind(R.id.layout_add_relatives)
+    RelativeLayout layoutAddRelatives;
+    @Bind(R.id.recview_relatives_msg)
+    RecyclerView recRelativesMsg;
+    @Bind(R.id.nestedScrollView_main_fragment)
+    NestedScrollView mNestedScrollView;
+    BaseRecAdapter<RelativeItemMsg> msgBaseRecAdapter;
+    SweetAlertDialog sDialog;
 
+    Handler mHandler = new Handler();
 
     @Nullable
     @Override
@@ -203,6 +225,35 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
         tvResponsibility.setCurrentType(JPSelectView.TYPE_STRING).setStringList(getResources().getStringArray(R.array.traffic_responsibility));
         tvIdType.setCurrentType(JPSelectView.TYPE_STRING).setStringList(getResources().getStringArray(R.array.id_type));
         tvHasSpouse.setCurrentType(JPSelectView.TYPE_STRING).setStringList(getResources().getStringArray(R.array.has_spouse));
+
+
+        layoutAddRelatives.setOnClickListener(this);
+
+        msgBaseRecAdapter = new BaseRecAdapter<RelativeItemMsg>() {
+            @Override
+            protected int onGetItemViewType(RelativeItemMsg item) {
+                return 0;
+            }
+
+            @Override
+            protected BaseViewHolder createViewHolder(Context context, ViewGroup parent, int type) {
+//                return new RelativesMsgItemHolder(context,parent);
+                return new RelativesMsgItemHolder(context,parent);
+            }
+        };
+        msgBaseRecAdapter.setmOnItemClickListener(new OnItemClickListener<RelativeItemMsg>() {
+            @Override
+            public void onItemClick(RelativeItemMsg itemValue, int viewID, int position) {
+                switch (viewID){
+                    case R.id.iv_sub:
+                        msgBaseRecAdapter.deleteData(itemValue);
+                        break;
+                }
+            }
+        });
+        this.recRelativesMsg.addItemDecoration(new BaseRecViewDivider(getActivity(), LinearLayout.VERTICAL));
+        this.recRelativesMsg.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false));
+        this.recRelativesMsg.setAdapter(msgBaseRecAdapter);
     }
 
     @Override
@@ -232,18 +283,34 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
                 break;
 
             case R.id.btn_question:
-//                ((MainActivity)getActivity()).toggleConsultPage();
-                startActivity(new Intent(getActivity(), DemoActivity.class));
+////                ((MainActivity)getActivity()).toggleConsultPage();
+//                startActivity(new Intent(getActivity(), DemoActivity.class));
+//                break;
+                Intent intent = new Intent(getActivity(), ConsultActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
                 break;
             case R.id.tv_family_custom:
-                RelativesMsgFragment dialog = new RelativesMsgFragment();
-                dialog.setTargetFragment(MainFragment.this,11);
-                dialog.show(getFragmentManager(),"");
-                dialog.setPresenter(new RelativeMsgPresenter());
+            case R.id.layout_add_relatives:
+//                RelativesMsgFragment dialog = new RelativesMsgFragment();
+//                dialog.setTargetFragment(MainFragment.this,11);
+//                dialog.show(getFragmentManager(),"");
+//                dialog.setPresenter(new RelativeMsgPresenter());
+                //TODO: 添加一行需抚养人
+                Logger.i("添加一行需抚养人");
+                msgBaseRecAdapter.addData(new RelativeItemMsg(0,60));
+                //TODO:并将整个MainFragment滚动到最底部
+//                mNestedScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                //
+                mHandler.post(new Runnable() {
+                    public void run() {
+                        mNestedScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                        recRelativesMsg.scrollToPosition(msgBaseRecAdapter.getItemCount()-1);
+                    }
+                });
                 break;
         }
     }
-
 
     @Override
     public void prepareCalculateMsg() {
@@ -251,6 +318,7 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
         final Record record = new Record();
         ///TODO：开始收集信息，准备提交
 
+        this.mPresenter.startCalculate(record);
     }
 
     @Override
@@ -264,6 +332,14 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
                 btnRefreshLocation.setProgress(0);
             }
         },2000);
+    }
+
+    @Override
+    public void showRecordResult(RecordRes recordRes) {
+        if (sDialog!=null){
+            sDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+            sDialog.setTitleText("理赔总额："+ recordRes.money_pay);
+        }
     }
 
 
@@ -281,7 +357,7 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
     /**
      * 咨询
      */
-    @OnClick(R.id.fab_consult)
+    @OnClick({R.id.fab_consult})
     public void openConsultPage(View view){
         ///打开下方的咨询界面
 //        toggleConsultPage();
@@ -295,10 +371,9 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
      */
     @OnClick(R.id.fab_calculate)
     public void startCalculate(View view){
-
 //        closeConsultPage();
 
-        SweetAlertDialog sDialog = new SweetAlertDialog(getContext());
+         sDialog = new SweetAlertDialog(getContext());
         sDialog.setCancelable(true);
         sDialog.setTitleText("计算理赔？").setCancelText("取消").setConfirmText("开始计算")
                 .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
@@ -310,10 +385,20 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
             @Override
             public void onClick(SweetAlertDialog sweetAlertDialog) {
                 sweetAlertDialog.changeAlertType(SweetAlertDialog.PROGRESS_TYPE);
+                sweetAlertDialog.setTitleText("计算中。。。");
+                sweetAlertDialog.setCancelable(false);
                 ///开始计算
-                mPresenter.prepareCalculate();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPresenter.prepareCalculate();
+                    }
+                },2000);
+//                mPresenter.prepareCalculate();
 
             }
         }).show();
     }
+
+
 }

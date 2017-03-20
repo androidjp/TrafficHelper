@@ -83,4 +83,7 @@
     <string name="ic_back">&#xe618;</string>
     <string name="ic_share">&#xe683;</string>
     <string name="ask_speech">点击后说话</string>
+    <string name="relative_should_care">添加需抚养人</string>
+    <string name="parent">父母</string>
+    <string name="input_age">输入岁数</string>
 </resources>

@@ -3,7 +3,7 @@ package com.androidjp.traffichelper.adapter;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.androidjp.lib_custom_view.edittext.ClearEditText;
 import com.androidjp.lib_custom_view.selector.JPSelectView;
@@ -21,8 +21,8 @@ import butterknife.Bind;
  */
 
 public class RelativesMsgItemHolder extends BaseViewHolder<RelativeItemMsg>{
-    @Bind(R.id.ibtn_fail)
-    ImageButton ibtnFail;
+    @Bind(R.id.iv_sub)
+    ImageView ivSub;
     @Bind(R.id.jsv_relatives_msg)
     JPSelectView relationSelector;
     @Bind(R.id.cet_age)
@@ -40,11 +40,11 @@ public class RelativesMsgItemHolder extends BaseViewHolder<RelativeItemMsg>{
 
     @Override
     protected void bindData(final RelativeItemMsg itemValue, final int position, final OnItemClickListener<RelativeItemMsg> listener) {
-        ibtnFail.setOnClickListener(new View.OnClickListener() {
+        ivSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener!=null){
-                    listener.onItemClick(itemValue,R.id.ibtn_fail,position);
+                    listener.onItemClick(itemValue,R.id.iv_sub,position);
                 }
             }
         });

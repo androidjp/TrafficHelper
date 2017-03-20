@@ -14,4 +14,10 @@ public class ExampleUnitTest {
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
     }
+
+//    @Test
+//    public void calculation_isCorrect() throws Exception{
+//        int i = 11;
+//        assertEquals(1, (long)(i*1.0/10%1));
+//    }
 }

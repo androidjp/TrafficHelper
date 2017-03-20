@@ -33,6 +33,7 @@ public class Record implements Cloneable {
     public int hospital_days;
     public int tardy_days;///误工天数
     public int nutrition_days;//营养期
+    public int nursing_days;//护理期
     private int result_id = -1;///结果（外键）
 //    @Ignore
     private RecordRes result;///结果
@@ -41,7 +42,7 @@ public class Record implements Cloneable {
 
     public Record() {
         this.location_id = -1;
-        this.user_id = UserManager.getInstance(THApplication.getContext()).getUser().getUser_id();
+        this.user_id = UserManager.getInstance(THApplication.getContext()).getUserId();
     }
 
     public RecordRes getResult() {
@@ -119,6 +120,7 @@ public class Record implements Cloneable {
         this.hospital_days = record.hospital_days;
         this.tardy_days = record.tardy_days;///误工天数
         this.nutrition_days = record.nutrition_days;//营养期
+        this.nursing_days = record.nursing_days;//营养期
 //        if (this.relative_msg_list == null)
 //            this.relative_msg_list = new RealmList<>();
 //
@@ -143,6 +145,7 @@ public class Record implements Cloneable {
         map.put("hospital_days",hospital_days);
         map.put("tardy_days",tardy_days);
         map.put("nutrition_days",nutrition_days);
+        map.put("nursing_days",nursing_days);
         return map;
     }
 }

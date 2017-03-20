@@ -6,7 +6,9 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -36,6 +38,10 @@ public class QQSlidingMenu extends HorizontalScrollView {
     private ViewGroup mContent;
 
 
+    ///解决滑动冲突相关手势对象
+    private GestureDetector mGestureDetector;
+    private View.OnTouchListener mGestureListener;
+
     public QQSlidingMenu(Context context) {
         this(context, null, 0);
     }
@@ -47,6 +53,10 @@ public class QQSlidingMenu extends HorizontalScrollView {
 
     public QQSlidingMenu(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        ///滑动冲突解决相关：自定义 OnSimpleGestureListener，只拦截横向滑动手势事件
+        mGestureDetector =  new GestureDetector(context,new HScrollDetector());
+        setFadingEdgeLength(0);
+
         ///获取屏幕宽度
         mScreenWidth = DisplayUtil.getScreenWidth((Activity) context);
 
@@ -59,6 +69,23 @@ public class QQSlidingMenu extends HorizontalScrollView {
             }
         }
         a.recycle();
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        ///解决滑动冲突：只拦截横向滑动事件
+        return super.onInterceptTouchEvent(ev)&&mGestureDetector.onTouchEvent(ev);
+    }
+
+    class HScrollDetector extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            if(Math.abs(distanceX) > 4*Math.abs(distanceY)) {
+                return true;
+            }
+
+            return false;
+        }
     }
 
     @Override

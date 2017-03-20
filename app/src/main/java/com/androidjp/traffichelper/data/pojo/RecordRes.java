@@ -18,6 +18,7 @@ public class RecordRes {
     public float money_medical;//医药费
     public float money_nutrition;//营养费
     public float money_hospital_allowance;//住院伙食补贴
+    public float money_bury; //安葬费
     ///各个详情（内容，对应url链接）
     public Map<String, String> money_hurt_info;
     public Map<String, String> money_heart_info;
@@ -26,9 +27,23 @@ public class RecordRes {
     public Map<String, String> money_medical_info;
     public Map<String, String> money_nutrition_info;
     public Map<String, String> money_hospital_info;
+    public Map<String, String> money_bury_info;
 
 
     public int getResult_id() {
+
         return result_id;
+    }
+
+    //计算所有费用
+    public void calculateAllPay(){
+        money_pay = money_hurt
+                + money_heart
+                + money_hospital_allowance
+                + money_nursing
+                + money_nutrition
+                + money_medical
+                + money_tardy
+                + money_bury;
     }
 }

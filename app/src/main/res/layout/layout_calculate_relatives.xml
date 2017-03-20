@@ -44,9 +44,63 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/line_family_custom"
                 android:gravity="center"
-                android:text="点击选择"
+                android:text="点击添加"
                 android:textSize="16sp"
                 />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="100dp"
+            >
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recview_relatives_msg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout_add_relatives"
+            android:padding="8dp"
+            android:background="#ef4f8b"
+            >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                >
+                <TextView
+                    android:id="@+id/tv_add_relatives"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/relative_should_care"
+                    android:textColor="@color/white"
+                    android:layout_centerVertical="true"
+                    android:gravity="right"
+                    android:layout_toLeftOf="@+id/iv_add_relatives"
+                    android:layout_marginRight="6dp"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_add_relatives"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/add"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="4dp"
+                    />
+
+            </RelativeLayout>
 
 
         </RelativeLayout>
