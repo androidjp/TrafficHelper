@@ -117,4 +117,5 @@ dependencies {
     compile 'com.skyfishjy.ripplebackground:library:1.0.1'
     compile project(':lib-baidu-asr')
     compile project(':lib-turing-nlp')
+    compile 'com.github.mcxtzhang:ZLayoutManager:V1.1.0'
 }

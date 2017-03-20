@@ -1,12 +1,14 @@
 package com.androidjp.traffichelper.data.pojo;
 
+import com.androidjp.lib_common_util.data.StringRandomUtil;
+
 /**
  * 定位信息
  * Created by androidjp on 2017/1/4.
  */
 public class Location{
-//    @PrimaryKey
-    private int location_id  = -1;
+    //    @PrimaryKey
+    private String location_id;
     public String city;
     public String province;
     public String street;
@@ -19,13 +21,14 @@ public class Location{
         this.street = street;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.location_id = StringRandomUtil.getStringRandom(10);
     }
 
-    public int getLocation_id() {
+    public String getLocation_id() {
         return location_id;
     }
 
-    public void setLocation_id(int location_id) {
+    public void setLocation_id(String location_id) {
         this.location_id = location_id;
     }
 }

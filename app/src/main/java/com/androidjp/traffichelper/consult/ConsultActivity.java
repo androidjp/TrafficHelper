@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.androidjp.lib_common_util.system.ActivityUtil;
 import com.androidjp.lib_common_util.system.KeyBoardUtil;
 import com.androidjp.lib_common_util.system.PermissionUtil;
+import com.androidjp.traffichelper.BaseSubActivity;
 import com.androidjp.traffichelper.R;
 import com.liuguangqiang.swipeback.SwipeBackActivity;
 import com.liuguangqiang.swipeback.SwipeBackLayout;
@@ -32,10 +33,7 @@ import butterknife.ButterKnife;
  * Created by androidjp on 2017/2/21.
  */
 
-public class ConsultActivity extends SwipeBackActivity {
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
-
+public class ConsultActivity extends BaseSubActivity {
     /**
      * 咨询界面
      */
@@ -58,29 +56,16 @@ public class ConsultActivity extends SwipeBackActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_consult);
-        ButterKnife.bind(this);
-        ///配置 滑动返回（SwipeBack） 相关操作
-        setDragEdge(SwipeBackLayout.DragEdge.LEFT);
 
         /// 动态创建和添加Fragment 到 Activity
-        mConsultFragment = (ConsultContract.View) getSupportFragmentManager().findFragmentById(R.id.frame_consult_content);
+        mConsultFragment = (ConsultContract.View) getSupportFragmentManager().findFragmentById(R.id.frame_common_sub_content);
         if (mConsultFragment == null) {
             mConsultFragment = new ConsultFragment();
-            ActivityUtil.addFragmentToActivity(getSupportFragmentManager(), (Fragment) mConsultFragment, R.id.frame_consult_content);
+            ActivityUtil.addFragmentToActivity(getSupportFragmentManager(), (Fragment) mConsultFragment, R.id.frame_common_sub_content);
         }
         /// MVP： 为 View 绑定 Presenter
         mConsultPresenter = new ConsultPresenter(this, mConsultFragment);
         mConsultFragment.setPresenter(mConsultPresenter);
-
-        //设置Toolbar
-        this.mToolbar.setNavigationIcon(R.drawable.back);
-        this.mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
 
         /// Level 23 动态申请权限
         PermissionUtil.checkForPermission(this, permissions);

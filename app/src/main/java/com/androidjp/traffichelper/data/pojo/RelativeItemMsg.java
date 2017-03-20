@@ -1,5 +1,7 @@
 package com.androidjp.traffichelper.data.pojo;
 
+import com.androidjp.lib_common_util.data.StringRandomUtil;
+
 /**
  * 亲属抚养关系item
  * relation：0：子女 1：父母
@@ -7,19 +9,26 @@ package com.androidjp.traffichelper.data.pojo;
  * Created by androidjp on 2017/1/17.
  */
 public class RelativeItemMsg {
-//    @PrimaryKey
-    private int relativeItemMsg_id = -1;
-//    @Required
+    //    @PrimaryKey
+    private String relativeItemMsg_id;
+    //    @Required
     private int record_id = -1;
     private int relation;
     private int age;
 
     public RelativeItemMsg(int relation, int age) {
+        this.relativeItemMsg_id = StringRandomUtil.getStringRandom(10);
         this.relation = relation;
         this.age = age;
     }
 
+    public String getRelativeItemMsg_id() {
+        return relativeItemMsg_id;
+    }
 
+    public void setRelativeItemMsg_id(String relativeItemMsg_id) {
+        this.relativeItemMsg_id = relativeItemMsg_id;
+    }
 
     public int getAge() {
         return age;
@@ -27,14 +36,6 @@ public class RelativeItemMsg {
 
     public void setAge(int age) {
         this.age = age;
-    }
-
-    public int getRelativeItemMsg_id() {
-        return relativeItemMsg_id;
-    }
-
-    public void setRelativeItemMsg_id(int relativeItemMsg_id) {
-        this.relativeItemMsg_id = relativeItemMsg_id;
     }
 
     public int getRecord_id() {

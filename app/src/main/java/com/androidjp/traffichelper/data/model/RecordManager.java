@@ -39,7 +39,7 @@ public class RecordManager {
      * @param record 数据获取对象
      */
     public void setRecordMsg(Record record){
-        this.record.copyData(record);
+//        this.record.copyData(record);
     }
 
 

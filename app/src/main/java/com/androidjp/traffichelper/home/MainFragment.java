@@ -33,6 +33,7 @@ import com.androidjp.traffichelper.consult.ConsultActivity;
 import com.androidjp.traffichelper.data.pojo.Record;
 import com.androidjp.traffichelper.data.pojo.RecordRes;
 import com.androidjp.traffichelper.data.pojo.RelativeItemMsg;
+import com.androidjp.traffichelper.result.ResultActivity;
 import com.dd.CircularProgressButton;
 import com.orhanobut.logger.Logger;
 
@@ -335,10 +336,40 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
     }
 
     @Override
-    public void showRecordResult(RecordRes recordRes) {
+    public void showRecordResult(final RecordRes recordRes) {
         if (sDialog!=null){
-            sDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-            sDialog.setTitleText("理赔总额："+ recordRes.money_pay);
+            if (recordRes !=null){
+                sDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                sDialog.setTitleText("理赔总额："+ recordRes.money_pay)
+                        .setConfirmText("查看详情")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                Intent intent = new Intent(getActivity(), ResultActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putParcelable("recordRes", recordRes);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        });
+            }else{
+                sDialog.changeAlertType(SweetAlertDialog.WARNING_TYPE);
+                sDialog.setTitleText("计算失败")
+                        .setCancelText("取消")
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismissWithAnimation();
+                            }
+                        })
+                        .setConfirmText("重试")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                mPresenter.prepareCalculate();
+                            }
+                        }).setCancelable(true);
+            }
         }
     }
 
