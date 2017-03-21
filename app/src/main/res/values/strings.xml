@@ -86,4 +86,7 @@
     <string name="relative_should_care">添加需抚养人</string>
     <string name="parent">父母</string>
     <string name="input_age">输入岁数</string>
+    <string name="last_page">上一页</string>
+    <string name="label_pay_all">理赔总金额</string>
+    <string name="yuan">元</string>
 </resources>

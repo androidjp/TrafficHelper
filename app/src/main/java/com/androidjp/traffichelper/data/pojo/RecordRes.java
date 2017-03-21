@@ -23,7 +23,7 @@ public class RecordRes implements Parcelable{
     public float money_bury; //安葬费
     ///各个详情
     public String money_hurt_info;
-    public String money_heart_into;
+    public String money_heart_info;
     public String money_nursing_info;//护理费
     public String money_tardy_info;//误工费
     public String money_medical_info;//医药费
@@ -47,7 +47,7 @@ public class RecordRes implements Parcelable{
         money_hospital_allowance = in.readFloat();
         money_bury = in.readFloat();
         money_hurt_info = in.readString();
-        money_heart_into = in.readString();
+        money_heart_info = in.readString();
         money_nursing_info = in.readString();
         money_tardy_info = in.readString();
         money_medical_info = in.readString();
@@ -103,7 +103,7 @@ public class RecordRes implements Parcelable{
         dest.writeFloat(money_hospital_allowance);
         dest.writeFloat(money_bury);
         dest.writeString(money_hurt_info);
-        dest.writeString(money_heart_into);
+        dest.writeString(money_heart_info);
         dest.writeString(money_nursing_info);//护理费
         dest.writeString(money_tardy_info);//误工费
         dest.writeString(money_medical_info);//医药费

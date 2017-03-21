@@ -252,7 +252,7 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
                 }
             }
         });
-        this.recRelativesMsg.addItemDecoration(new BaseRecViewDivider(getActivity(), LinearLayout.VERTICAL));
+        this.recRelativesMsg.addItemDecoration(new BaseRecViewDivider(getActivity(), LinearLayoutManager.HORIZONTAL));
         this.recRelativesMsg.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false));
         this.recRelativesMsg.setAdapter(msgBaseRecAdapter);
     }

@@ -103,7 +103,7 @@ dependencies {
     compile "io.reactivex.rxjava2:rxjava:$rootProject.rxjavaVersion"
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
     // 更好的RelativeLayout -- ConstraintLayout
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
+//    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
     // 方便网络请求查看的依赖库（chuck）【只是……需要用到 25.1.1版本的 support库】
     //    debugCompile 'com.readystatesoftware.chuck:library:1.0.4'
     //    releaseCompile 'com.readystatesoftware.chuck:library-no-op:1.0.4'
@@ -117,5 +117,4 @@ dependencies {
     compile 'com.skyfishjy.ripplebackground:library:1.0.1'
     compile project(':lib-baidu-asr')
     compile project(':lib-turing-nlp')
-    compile 'com.github.mcxtzhang:ZLayoutManager:V1.1.0'
 }

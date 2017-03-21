@@ -1,0 +1,41 @@
+用法：
+1. 首先：创建recyclerView并绑定对应的RecyclerView.ViewHelper
+2. 开始配置
+// dataList means dataSource for adapter
+CardItemTouchHelperCallback cardCallback = new CardItemTouchHelperCallback(recyclerView.getAdapter(), dataList);
+ItemTouchHelper touchHelper = new ItemTouchHelper(cardCallback); CardLayoutManager cardLayoutManager = new CardLayoutManager(recyclerView, touchHelper);
+recyclerView.setLayoutManager(cardLayoutManager);
+touchHelper.attachToRecyclerView(recyclerView);
+cardCallback.setOnSwipedListener(new OnSwipeListener<T>() {
+
+    @Override
+    public void onSwiping(RecyclerView.ViewHolder viewHolder, float ratio, int direction) {
+        /**
+         * will callback when the card are swiping by user
+         * viewHolder : thee viewHolder of swiping card
+         * ratio : the ratio of swiping , you can add some animation by the ratio
+         * direction : CardConfig.SWIPING_LEFT means swiping from left；CardConfig.SWIPING_RIGHT means swiping from right
+         *             CardConfig.SWIPING_NONE means not left nor right
+         */
+    }
+
+    @Override
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, T t, int direction) {
+	    /**
+	     *  will callback when the card swiped from screen by user
+	     *  you can also clean animation from the itemview of viewHolder in this method
+	     *  viewHolder : the viewHolder of swiped cards
+	     *  t : the data of swiped cards from dataList
+	     *  direction : CardConfig.SWIPED_LEFT means swiped from left；CardConfig.SWIPED_RIGHT means swiped from right
+	     */
+    }
+
+    @Override
+    public void onSwipedClear() {
+        /**
+         *  will callback when all cards swiped clear
+         *  you can load more data
+         */
+    }
+
+});

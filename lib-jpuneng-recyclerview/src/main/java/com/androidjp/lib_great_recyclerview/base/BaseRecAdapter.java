@@ -94,7 +94,8 @@ public abstract class BaseRecAdapter<V> extends RecyclerView.Adapter<RecyclerVie
         if (this.mValueList==null){
             this.mValueList = new ArrayList<>();
         }
-        this.mValueList.add(data);
+//        this.mValueList.add(data);
+        this.mValueList.add(this.mValueList.size(),data);
         notifyDataSetChanged();
     }
 

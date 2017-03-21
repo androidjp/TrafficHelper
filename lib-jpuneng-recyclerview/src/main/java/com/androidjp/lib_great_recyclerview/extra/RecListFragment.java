@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,7 @@ import com.androidjp.lib_great_recyclerview.R;
 import com.androidjp.lib_great_recyclerview.base.BaseRecAdapter;
 import com.androidjp.lib_great_recyclerview.base.OnItemClickListener;
 
-import java.util.List;
-
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
@@ -42,7 +40,14 @@ public abstract class RecListFragment<V> extends Fragment implements OnItemClick
             mRecView = (RecyclerView) rootLayout.findViewById(R.id.recview);
         }
         ButterKnife.bind(this, rootLayout);
+
+        mListAdapter = onSetAdapter();
+        mListAdapter.setmOnItemClickListener(this);
+        mRecView.setAdapter(mListAdapter);
         mRecView.setLayoutManager(onSetLayoutManager());
+        RecyclerView.LayoutManager layoutManager = onSetLayoutManager();
+        if (layoutManager!=null)
+            mRecView.setLayoutManager(layoutManager);
         RecyclerView.ItemDecoration[] decorations = onAddItemDecoration();
         if (decorations != null) {
             for (RecyclerView.ItemDecoration item : decorations) {
@@ -65,9 +70,6 @@ public abstract class RecListFragment<V> extends Fragment implements OnItemClick
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mListAdapter = onSetAdapter();
-        mListAdapter.setmOnItemClickListener(this);
-        mRecView.setAdapter(mListAdapter);
 
         emptyView = onSetEmptyView();
         if (emptyView != null) {

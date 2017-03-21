@@ -23,9 +23,10 @@ import butterknife.ButterKnife;
 
 public class BaseSubActivity extends SwipeBackActivity {
     @Bind(R.id.toolbar)
-    Toolbar mToolbar;
+    public Toolbar mToolbar;
     @Bind(R.id.frame_common_sub_content)
-    FrameLayout mSubContent;
+    public FrameLayout mSubContent;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

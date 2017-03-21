@@ -29,9 +29,10 @@ public class NumberUtil {
 //        return df.format(num);
 
         //方式三
-        String res = String.format("%.2d", num);//d表示double，f表示float
-        return res;
+        DecimalFormat decimalFormat=new DecimalFormat(".00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
+        return  decimalFormat.format(num);//format 返回的是字符串
     }
+
 
 
     /**

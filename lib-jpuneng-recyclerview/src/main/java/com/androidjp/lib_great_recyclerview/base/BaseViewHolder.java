@@ -3,7 +3,10 @@ package com.androidjp.lib_great_recyclerview.base;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+
+import java.lang.ref.SoftReference;
 
 import butterknife.ButterKnife;
 
@@ -12,7 +15,7 @@ import butterknife.ButterKnife;
  * Created by androidjp on 16-7-24.
  */
 public abstract class BaseViewHolder<V> extends RecyclerView.ViewHolder {
-
+    private SoftReference<View> softReference;
 
     /**
      * 新的自定义的基类构造方法：
@@ -25,7 +28,7 @@ public abstract class BaseViewHolder<V> extends RecyclerView.ViewHolder {
 
         super(LayoutInflater.from(context).inflate(layoutRes, root, false));
         ButterKnife.bind(this, itemView);///本身ViewHolder就有一个public修饰的绑定着的item View
-
+        softReference = new SoftReference<View>(itemView);
     }
 
 
@@ -65,5 +68,28 @@ public abstract class BaseViewHolder<V> extends RecyclerView.ViewHolder {
      * @param listener  点击事件监听者
      */
     protected abstract void bindData(V itemValue, int position, OnItemClickListener<V> listener);
+
+    /**
+     * 获取绑定的item View
+     * @return
+     */
+    public View getView(){
+        if (this.softReference!=null)
+            return this.softReference.get();
+        else
+            return null;
+    }
+
+    /**
+     * 通过Id 获取 对应的控件
+     * @param id 控件id
+     * @return 控件引用
+     */
+    public View getViewById(int id){
+        if (this.softReference!=null){
+            return this.softReference.get().findViewById(id);
+        }else
+            return null;
+    }
 
 }

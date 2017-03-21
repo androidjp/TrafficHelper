@@ -64,7 +64,6 @@ public class MainPresenter implements MainContract.Presenter, AMapLocationManage
                 .map(new Function<Record, RecordRes>() {
                     @Override
                     public RecordRes apply(Record record) throws Exception {
-                        Thread.sleep(2000);
                         RecordRes recordRes = new RecordRes();
                         int dead = 11;
                         int fen_mu = 10;
