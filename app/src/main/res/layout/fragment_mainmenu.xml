@@ -68,23 +68,23 @@
 
             <TextView
                 android:id="@+id/id_img2"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/ic_close_app"
-                android:textSize="40sp"
+                android:layout_margin="20dp"
+                android:text="@string/ic_history"
+                android:textSize="30sp"
                 android:textColor="@color/white"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="16dp"
+                android:layout_margin="16dp"
                 android:layout_toRightOf="@+id/id_img2"
-                android:text="历史记录"
+                android:text="@string/history"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
         </RelativeLayout>
@@ -98,13 +98,12 @@
 
             <TextView
                 android:id="@+id/id_img4"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/ic_close_app"
-                android:textSize="40sp"
+                android:layout_margin="20dp"
+                android:text="@string/ic_app_settings"
+                android:textSize="30sp"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
@@ -112,9 +111,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="16dp"
+                android:layout_margin="16dp"
                 android:layout_toRightOf="@+id/id_img4"
-                android:text="应用设置"
+                android:text="@string/app_settings"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
         </RelativeLayout>
@@ -127,13 +126,13 @@
 
             <TextView
                 android:id="@+id/id_img5"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/ic_close_app"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 />
@@ -142,9 +141,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="16dp"
+                android:layout_margin="16dp"
                 android:layout_toRightOf="@+id/id_img5"
-                android:text="退出App"
+                android:text="@string/close_app"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
         </RelativeLayout>

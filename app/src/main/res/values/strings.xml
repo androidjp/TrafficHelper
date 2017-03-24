@@ -78,10 +78,9 @@
     <string name="at_androidjp">有理赔app，designer吴骏鹏</string>
 
     <!--图标相关-->
-    <string name="ic_user_face">&#xe620;</string>
-    <string name="ic_close_app">&#xe681;</string>
-    <string name="ic_back">&#xe618;</string>
-    <string name="ic_share">&#xe683;</string>
+    <string name="ic_close_app">&#xe63b;</string>
+    <string name="ic_history">&#xe672;</string>
+    <string name="ic_app_settings">&#xe612;</string>
     <string name="ask_speech">点击后说话</string>
     <string name="relative_should_care">添加需抚养人</string>
     <string name="parent">父母</string>
@@ -89,4 +88,14 @@
     <string name="last_page">上一页</string>
     <string name="label_pay_all">理赔总金额</string>
     <string name="yuan">元</string>
+    <string name="modify_user_pic">修改用户头像</string>
+    <string name="label_user_name">用户名</string>
+    <string name="label_age">年龄</string>
+    <string name="modify_password">修改密码</string>
+    <string name="accident_location">事故位置:</string>
+    <string name="accident_pay">事故总理赔金额：</string>
+    <string name="history">历史记录</string>
+    <string name="app_settings">应用设置</string>
+    <string name="close_app">退出App</string>
+    <string name="no_data">暂无数据~ 下拉刷新看看</string>
 </resources>

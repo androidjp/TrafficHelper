@@ -7,6 +7,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.animation.Interpolator;
@@ -31,6 +32,7 @@ public class FABBottomUpDownBehavior extends CoordinatorLayout.Behavior<View>{
     @Override
     public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, View child,
                       View directTargetChild, View target, int nestedScrollAxes) {
+        ///如果fab看得见，并且距离coordinatorLayout的底部距离为0【其实就是初始状态】
         if(child.getVisibility()==View.VISIBLE&&viewY==0){
             viewY=coordinatorLayout.getHeight()-child.getY();
         }
@@ -39,6 +41,7 @@ public class FABBottomUpDownBehavior extends CoordinatorLayout.Behavior<View>{
 
     @Override
     public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dx, int dy, int[] consumed) {
+        Log.d("FAB.onNestedPreScroll()", "dy="+dy+",isAnimate="+isAnimate+",child.getVisibility()==View.VISIBLE?-->"+(child.getVisibility()==View.VISIBLE));
         if(dy>=0&&!isAnimate&&child.getVisibility()==View.VISIBLE){
             hide(child);
         }else if(dy <0&&!isAnimate&&child.getVisibility()==View.GONE){
@@ -48,6 +51,7 @@ public class FABBottomUpDownBehavior extends CoordinatorLayout.Behavior<View>{
 
     //隐藏时的动画
     private void hide(final View view) {
+        Log.i("FABBehavior","hide()");
         ViewPropertyAnimator animator = view.animate().translationY(viewY).setInterpolator(INTERPOLATOR).setDuration(200);
         animator.setListener(new Animator.AnimatorListener() {
             @Override
@@ -71,6 +75,7 @@ public class FABBottomUpDownBehavior extends CoordinatorLayout.Behavior<View>{
 
     //显示时的动画
     private void show(final View view) {
+        Log.i("FABBehavior","show()");
         ViewPropertyAnimator animator = view.animate().translationY(0).setInterpolator(INTERPOLATOR).setDuration(200);
         animator.setListener(new Animator.AnimatorListener() {
             @Override

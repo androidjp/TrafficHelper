@@ -116,6 +116,10 @@
             android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"
             />
+        <activity android:name=".history.HistoryActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            />
 
         <!--高德定位服务-->
         <service android:name="com.amap.api.location.APSService"/>

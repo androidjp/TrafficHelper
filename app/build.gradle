@@ -103,10 +103,12 @@ dependencies {
     compile "io.reactivex.rxjava2:rxjava:$rootProject.rxjavaVersion"
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
     // 更好的RelativeLayout -- ConstraintLayout
-//    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
+    //    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
     // 方便网络请求查看的依赖库（chuck）【只是……需要用到 25.1.1版本的 support库】
     //    debugCompile 'com.readystatesoftware.chuck:library:1.0.4'
     //    releaseCompile 'com.readystatesoftware.chuck:library-no-op:1.0.4'
+    /// 郭霖LRecyclerView 自定义扩展的RecyclerView,但由于这个库会让相关behavior失效，所以停用
+    //    compile 'com.github.jdsjlzx:LRecyclerView:1.4.0'
     compile project(':lib-common-util')
     compile project(':lib-sweet-alert')
     compile project(':lib-custom-view')

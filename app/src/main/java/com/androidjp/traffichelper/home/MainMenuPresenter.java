@@ -1,15 +1,16 @@
 package com.androidjp.traffichelper.home;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.androidjp.lib_common_util.pojo.network.Result;
 import com.androidjp.traffichelper.data.Constants;
 import com.androidjp.traffichelper.data.ServiceAPI;
 import com.androidjp.traffichelper.data.model.UserManager;
 import com.androidjp.traffichelper.data.pojo.User;
+import com.androidjp.traffichelper.history.HistoryActivity;
 import com.androidjp.traffichelper.login.LoginActivity;
 import com.androidjp.traffichelper.settings.SettingsActivity;
 import com.androidjp.traffichelper.user.UserActivity;
@@ -92,19 +93,27 @@ class MainMenuPresenter implements MainMenuContract.Presenter {
 
     @Override
     public void gotoUserPage() {
-        if (UserManager.getInstance(mContext).getUser()==null) {
-            if (mView!=null)
-                mView.get().gotoActivity(LoginActivity.class.getSimpleName(),new Intent());
-        } else {
-            if (mView!=null)
+//        if (UserManager.getInstance(mContext).getUser()==null) {
+//            if (mView!=null)
+//                mView.get().gotoActivity(LoginActivity.class.getSimpleName(),new Intent());
+//        } else {
+//            if (mView!=null)
+//                mView.get().gotoActivity(UserActivity.class.getSimpleName(),new Intent());
+//        }
+        if (mView!=null)
                 mView.get().gotoActivity(UserActivity.class.getSimpleName(),new Intent());
-        }
     }
 
     @Override
     public void gotoSettings() {
         if (mView!=null)
             mView.get().gotoActivity(SettingsActivity.class.getSimpleName(),new Intent());
+    }
+
+    @Override
+    public void gotoHistory() {
+        if(mView!=null)
+            mView.get().gotoActivity(HistoryActivity.class.getSimpleName(),new Intent());
     }
 
     @Override

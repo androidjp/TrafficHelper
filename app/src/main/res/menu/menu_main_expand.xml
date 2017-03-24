@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<item
+    android:id="@+id/action_expand_all"
+    android:orderInCategory="999"
+    app:showAsAction="never"
+    android:title="展开所有"/>
+
+<item
+    android:id="@+id/action_collapse_all"
+    android:orderInCategory="100"
+    app:showAsAction="never"
+    android:title="隐藏所有"/>
+</menu>

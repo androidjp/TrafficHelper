@@ -26,6 +26,8 @@ public class MainMenuContract {
         void gotoUserPage();
         //去设置
         void gotoSettings();
+        //查看历史记录
+        void gotoHistory();
         //退出App
         void closeApp();
     }

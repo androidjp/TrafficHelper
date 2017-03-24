@@ -1,5 +1,6 @@
 package com.androidjp.traffichelper.data.pojo;
 
+import com.androidjp.lib_common_util.data.NumberUtil;
 import com.androidjp.lib_common_util.data.StringRandomUtil;
 import com.androidjp.traffichelper.THApplication;
 import com.androidjp.traffichelper.data.model.UserManager;
@@ -42,6 +43,7 @@ public class Record implements Cloneable {
     private String result_id;///结果（外键）
     //    @Ignore
     private RecordRes result;///结果
+    private float pay;///总理赔金额（后端保存时赋予的）
     //    private RealmList<RelativeItemMsg> relative_msg_list;
     private List<RelativeItemMsg> relative_msg_list;
 
@@ -49,6 +51,7 @@ public class Record implements Cloneable {
         this.user_id = UserManager.getInstance(THApplication.getContext()).getUserId();
         this.record_id = StringRandomUtil.getStringRandom(20);
         this.result_id = StringRandomUtil.getStringRandom(20);
+        this.location_id = StringRandomUtil.getStringRandom(20);
     }
 
 
@@ -57,11 +60,43 @@ public class Record implements Cloneable {
     }
 
     public void setLocation(Location location) {
+        if (location == null)
+            return;
         this.location = location;
-        this.location_id = this.location.getLocation_id();
+        if (location.getLocation_id()==null){
+            this.location.setLocation_id(this.location_id);
+        }
+        if (!this.location_id.equals(this.location.getLocation_id())) {
+            this.location_id = this.location.getLocation_id();
+        }
     }
 
-//    public RealmList<RelativeItemMsg> getRelative_msg_list() {
+    public RecordRes getResult() {
+        return result;
+    }
+
+    public void setResult(RecordRes result) {
+        if (result == null)
+            return;
+        this.result = result;
+        if (this.result_id!=null && this.result.getResult_id()==null)
+            this.result.setResult_id(this.result_id);
+        if (!this.result_id.equals(this.result.getResult_id())) {
+            this.result = null;
+            return;
+        }
+        this.pay = this.result.money_pay;
+    }
+
+    public String getResult_id() {
+        return result_id;
+    }
+
+    public void setResult_id(String result_id) {
+        this.result_id = result_id;
+    }
+
+    //    public RealmList<RelativeItemMsg> getRelative_msg_list() {
 //        return relative_msg_list;
 //    }
 //
@@ -90,6 +125,13 @@ public class Record implements Cloneable {
         this.relative_msg_list = relative_msg_list;
     }
 
+    public String getPay() {
+        return NumberUtil.doubleRestStr(pay);
+    }
+
+    public void setPay(float pay) {
+        this.pay = pay;
+    }
 
     public Map<String, Object> getFieldMap() {
         Map<String, Object> map = new HashMap<>();

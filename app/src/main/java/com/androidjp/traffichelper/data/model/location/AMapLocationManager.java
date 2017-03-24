@@ -27,6 +27,7 @@ public class AMapLocationManager implements IAMapLocationManager{
     private AMapLocationClientOption mOption = null;
     private AMapLocationCallback mCallback =null;
 
+
     /**
      * 定位结果列表
      */

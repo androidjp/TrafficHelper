@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.androidjp.traffichelper.R;
 import com.androidjp.traffichelper.data.pojo.User;
+import com.androidjp.traffichelper.history.HistoryActivity;
 import com.androidjp.traffichelper.home.view.GlideCircleTransform;
 import com.androidjp.traffichelper.login.LoginActivity;
 import com.androidjp.traffichelper.settings.SettingsActivity;
@@ -114,6 +115,9 @@ public class MainMenuFragment extends Fragment implements MainMenuContract.View,
             case R.id.btn_menu_close:
                 mPresenter.closeApp();
                 break;
+            case R.id.btn_menu_history:
+                mPresenter.gotoHistory();
+                break;
         }
     }
 
@@ -152,6 +156,10 @@ public class MainMenuFragment extends Fragment implements MainMenuContract.View,
             startActivityForResult(intent,0);
         }else if (className.equals(SettingsActivity.class.getSimpleName())){
             ComponentName componentName = new ComponentName(getContext(),SettingsActivity.class);
+            intent.setComponent(componentName);
+            startActivityForResult(intent,0);
+        }else if (className.equals(HistoryActivity.class.getSimpleName())){
+            ComponentName componentName = new ComponentName(getContext(),HistoryActivity.class);
             intent.setComponent(componentName);
             startActivityForResult(intent,0);
         }

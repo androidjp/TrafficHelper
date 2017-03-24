@@ -111,4 +111,8 @@ public class RecordRes implements Parcelable{
         dest.writeString(money_hospital_allowance_info);//住院伙食补贴
         dest.writeString(money_bury_info); //安葬费
     }
+
+    public void setResult_id(String result_id) {
+        this.result_id = result_id;
+    }
 }

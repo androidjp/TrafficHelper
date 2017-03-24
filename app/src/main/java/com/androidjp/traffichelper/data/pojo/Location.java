@@ -21,7 +21,6 @@ public class Location{
         this.street = street;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.location_id = StringRandomUtil.getStringRandom(10);
     }
 
     public String getLocation_id() {
@@ -30,5 +29,10 @@ public class Location{
 
     public void setLocation_id(String location_id) {
         this.location_id = location_id;
+    }
+
+    @Override
+    public String toString() {
+        return province+city+street;
     }
 }

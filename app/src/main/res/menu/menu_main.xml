@@ -5,6 +5,6 @@
 
     <item
         android:id="@+id/action_user"
-        android:title="@string/ic_user_face"
+        android:title="@string/setting"
         app:showAsAction="always"/>
 </menu>

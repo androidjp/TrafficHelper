@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         ActivityUtil.addFragmentToActivity(getSupportFragmentManager(), (Fragment) mConsultFragment,R.id.root_consult);
 
         ////初始化Presenter
-        mMainMenuPresenter = new MainMenuPresenter(THApplication.getContext(), mMainMenuFragment);
+        mMainMenuPresenter = new MainMenuPresenter(this, mMainMenuFragment);
         mMainPresenter = new MainPresenter(THApplication.getContext(), mMainFramgent);
         mConsultPresenter = new ConsultPresenter(THApplication.getContext(),mConsultFragment);
 

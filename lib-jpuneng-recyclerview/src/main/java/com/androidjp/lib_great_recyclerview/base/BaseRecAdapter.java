@@ -108,6 +108,14 @@ public abstract class BaseRecAdapter<V> extends RecyclerView.Adapter<RecyclerVie
         notifyDataSetChanged();
     }
 
+    public void addList(int index , List<V> data){
+        if (this.mValueList == null){
+            this.mValueList = new ArrayList<>();
+        }
+        this.mValueList.addAll(index,data);
+        notifyDataSetChanged();
+    }
+
     /**
      * 删除
      * @param data

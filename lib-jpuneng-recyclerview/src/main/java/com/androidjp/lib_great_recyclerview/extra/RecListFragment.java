@@ -13,7 +13,6 @@ import com.androidjp.lib_great_recyclerview.R;
 import com.androidjp.lib_great_recyclerview.base.BaseRecAdapter;
 import com.androidjp.lib_great_recyclerview.base.OnItemClickListener;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
@@ -55,8 +54,10 @@ public abstract class RecListFragment<V> extends Fragment implements OnItemClick
             }
         }
 
+
         return rootLayout;
     }
+
 
 
     @Override
@@ -95,8 +96,8 @@ public abstract class RecListFragment<V> extends Fragment implements OnItemClick
         return this.mListAdapter;
     }
 
-    //==========================================================================;
 
+    //==========================================================================;
 
     /**
      * 设置RecyclerView是整体列表布局形式
