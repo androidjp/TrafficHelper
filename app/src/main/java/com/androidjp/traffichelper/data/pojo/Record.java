@@ -4,6 +4,8 @@ import com.androidjp.lib_common_util.data.NumberUtil;
 import com.androidjp.lib_common_util.data.StringRandomUtil;
 import com.androidjp.traffichelper.THApplication;
 import com.androidjp.traffichelper.data.model.UserManager;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,7 +65,7 @@ public class Record implements Cloneable {
         if (location == null)
             return;
         this.location = location;
-        if (location.getLocation_id()==null){
+        if (location.getLocation_id() == null) {
             this.location.setLocation_id(this.location_id);
         }
         if (!this.location_id.equals(this.location.getLocation_id())) {
@@ -79,7 +81,7 @@ public class Record implements Cloneable {
         if (result == null)
             return;
         this.result = result;
-        if (this.result_id!=null && this.result.getResult_id()==null)
+        if (this.result_id != null && this.result.getResult_id() == null)
             this.result.setResult_id(this.result_id);
         if (!this.result_id.equals(this.result.getResult_id())) {
             this.result = null;
@@ -234,7 +236,7 @@ public class Record implements Cloneable {
             return this;
         }
 
-        public Builder setNursingDays(int nursingDays){
+        public Builder setNursingDays(int nursingDays) {
             this.record.nursing_days = nursingDays;
             return this;
         }
@@ -275,5 +277,10 @@ public class Record implements Cloneable {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public String toJsonString() {
+        Gson gson = new GsonBuilder().create();
+        return gson.toJson(this);
     }
 }

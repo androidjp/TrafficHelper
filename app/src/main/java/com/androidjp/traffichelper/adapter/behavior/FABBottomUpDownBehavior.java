@@ -41,7 +41,7 @@ public class FABBottomUpDownBehavior extends CoordinatorLayout.Behavior<View>{
 
     @Override
     public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dx, int dy, int[] consumed) {
-        Log.d("FAB.onNestedPreScroll()", "dy="+dy+",isAnimate="+isAnimate+",child.getVisibility()==View.VISIBLE?-->"+(child.getVisibility()==View.VISIBLE));
+//        Log.d("FAB.onNestedPreScroll()", "dy="+dy+",isAnimate="+isAnimate+",child.getVisibility()==View.VISIBLE?-->"+(child.getVisibility()==View.VISIBLE));
         if(dy>=0&&!isAnimate&&child.getVisibility()==View.VISIBLE){
             hide(child);
         }else if(dy <0&&!isAnimate&&child.getVisibility()==View.GONE){
@@ -51,7 +51,7 @@ public class FABBottomUpDownBehavior extends CoordinatorLayout.Behavior<View>{
 
     //隐藏时的动画
     private void hide(final View view) {
-        Log.i("FABBehavior","hide()");
+//        Log.i("FABBehavior","hide()");
         ViewPropertyAnimator animator = view.animate().translationY(viewY).setInterpolator(INTERPOLATOR).setDuration(200);
         animator.setListener(new Animator.AnimatorListener() {
             @Override

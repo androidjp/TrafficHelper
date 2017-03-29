@@ -3,6 +3,8 @@ package com.androidjp.traffichelper;
 import android.app.Application;
 import android.content.Context;
 
+import com.androidjp.traffichelper.data.model.SharedPrefManager;
+
 
 /**
  * 自定义Application基类
@@ -26,4 +28,5 @@ public class THApplication extends Application {
         super.onCreate();
         sInstance = this;
     }
+
 }

@@ -26,6 +26,11 @@ public class UserActivity extends BaseSubActivity{
         mView = new UserFragment();
         userPresenter = new UserPresenter(this,mView);
         ActivityUtil.addFragmentToActivity(getSupportFragmentManager(),(Fragment)mView,R.id.frame_common_sub_content);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         mView.setPresenter(userPresenter);
     }
 }

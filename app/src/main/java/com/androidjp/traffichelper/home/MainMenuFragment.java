@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.androidjp.traffichelper.R;
+import com.androidjp.traffichelper.data.ServiceAPI;
 import com.androidjp.traffichelper.data.pojo.User;
 import com.androidjp.traffichelper.history.HistoryActivity;
 import com.androidjp.traffichelper.home.view.GlideCircleTransform;
@@ -21,6 +22,7 @@ import com.androidjp.traffichelper.login.LoginActivity;
 import com.androidjp.traffichelper.settings.SettingsActivity;
 import com.androidjp.traffichelper.user.UserActivity;
 import com.bumptech.glide.Glide;
+import com.orhanobut.logger.Logger;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -125,13 +127,18 @@ public class MainMenuFragment extends Fragment implements MainMenuContract.View,
     @Override
     public void refreshUserMsg(User user) {
         if (user == null) {
+            Logger.e("SPFManager 获取的 user 为空！");
+
             this.hideUserMsg();
         } else {
             this.showUserMsg();
-            Glide.with(this)
-                    .load(user.getUser_pic())
-                    .placeholder(R.mipmap.ic_launcher)
-                    .transform(new GlideCircleTransform(getActivity()))
+            Glide.with(getActivity())
+                    .load(ServiceAPI.REMOTE_SERVER_HOST+user.getUser_pic())
+//                                    .asGif() // 只能加载gif文件
+                    // .asBitmap() // 将gif作为静态图加载
+                    .placeholder(R.drawable.load)//占位符 也就是加载中的图片，可放个gif
+                    .error(R.mipmap.ic_launcher)//失败图片
+                    .crossFade(1000) // 图片淡入效果：可设置时长，默认“300ms”
                     .into(ivUserPic);
             if (user.getUser_id()!=null){
                 if (user.getUser_name()!=null)

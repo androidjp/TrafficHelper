@@ -14,6 +14,45 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/layout_salary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/label_salary"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/your_salary"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/line_salary"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/label_salary"
+                android:background="@drawable/line_vertical" />
+
+
+            <com.androidjp.lib_custom_view.edittext.ClearEditText
+                android:id="@+id/cet_salary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/line_salary"
+                android:layout_centerVertical="true"
+                android:hint="@string/input_your_salary"
+                android:inputType="number"
+                android:textSize="16sp"
+                />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
             android:id="@+id/layout_hospital_consume"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,6 +77,7 @@
 
 
             <com.androidjp.lib_custom_view.edittext.ClearEditText
+                android:id="@+id/cet_hospital_consume"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/line_hospital_consume"
@@ -76,6 +116,7 @@
 
 
             <com.androidjp.lib_custom_view.edittext.ClearEditText
+                android:id="@+id/cet_hospital_days"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/line_hospital_days"
@@ -111,6 +152,7 @@
 
 
             <com.androidjp.lib_custom_view.edittext.ClearEditText
+                android:id="@+id/cet_tardy_days"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/line_tardy_days"
@@ -147,6 +189,7 @@
 
 
             <com.androidjp.lib_custom_view.edittext.ClearEditText
+                android:id="@+id/cet_nutrition_days"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/line_nutrition_days"
@@ -182,6 +225,7 @@
 
 
             <com.androidjp.lib_custom_view.edittext.ClearEditText
+                android:id="@+id/cet_nursing_days"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/line_nursing_days"

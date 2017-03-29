@@ -1,5 +1,7 @@
 package com.androidjp.traffichelper.data.model.location;
 
+import com.androidjp.traffichelper.data.pojo.Location;
+
 /**
  * Created by androidjp on 2017/1/8.
  */
@@ -12,6 +14,8 @@ public interface IAMapLocationManager {
     void stopLocation();
     //释放资源
     void release();
+
+    Location getLocation();
 
     /**
      * @param model wifi 或 gps

@@ -2,6 +2,7 @@ package com.androidjp.traffichelper.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -13,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +24,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.androidjp.lib_common_util.ui.SnackUtil;
+import com.androidjp.lib_custom_view.edittext.ClearEditText;
 import com.androidjp.lib_custom_view.selector.JPSelectView;
 import com.androidjp.lib_great_recyclerview.base.BaseRecAdapter;
 import com.androidjp.lib_great_recyclerview.base.BaseRecViewDivider;
@@ -30,12 +36,15 @@ import com.androidjp.lib_great_recyclerview.base.OnItemClickListener;
 import com.androidjp.traffichelper.R;
 import com.androidjp.traffichelper.adapter.RelativesMsgItemHolder;
 import com.androidjp.traffichelper.consult.ConsultActivity;
+import com.androidjp.traffichelper.data.model.location.AMapLocationManager;
 import com.androidjp.traffichelper.data.pojo.Record;
 import com.androidjp.traffichelper.data.pojo.RecordRes;
 import com.androidjp.traffichelper.data.pojo.RelativeItemMsg;
 import com.androidjp.traffichelper.result.ResultActivity;
 import com.dd.CircularProgressButton;
 import com.orhanobut.logger.Logger;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -70,97 +79,40 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
     CircularProgressButton btnChoiceLocation;
 
     /**
-     * 第二部分，实际情况问答与输入
+     * 第二部分，实际情况问答与自定义View输入
      */
-    @Bind(R.id.layout_hurtlevel)
-    RelativeLayout layoutHurtlevel;
-    @Bind(R.id.label_hurtlevel)
-    TextView labelHurtlevel;
-    @Bind(R.id.line_hurtlevel)
-    View lineHurtlevel;
     @Bind(R.id.tv_hurtlevel)
     JPSelectView tvHurtlevel;
     @Bind(R.id.btn_question)
     ImageView btnQuestion;
-    @Bind(R.id.layout_sister_count)
-    RelativeLayout layoutSisterCount;
-    @Bind(R.id.label_sister_count)
-    TextView labelSisterCount;
-    @Bind(R.id.line_sister_count)
-    View lineSisterCount;
     @Bind(R.id.tv_sister_count)
     JPSelectView tvSisterCount;
-    @Bind(R.id.layout_has_spouse)
-    RelativeLayout layoutHasSpouse;
-    @Bind(R.id.label_has_spouse)
-    TextView labelHasSpouse;
-    @Bind(R.id.line_has_spouse)
-    View lineHasSpouse;
     @Bind(R.id.tv_has_spouse)
     JPSelectView tvHasSpouse;
-    @Bind(R.id.layout_id_type)
-    RelativeLayout layoutIdType;
-    @Bind(R.id.label_id_type)
-    TextView labelIdType;
-    @Bind(R.id.line_id_type)
-    View lineIdType;
     @Bind(R.id.tv_id_type)
     JPSelectView tvIdType;
-    @Bind(R.id.layout_responsibility)
-    RelativeLayout layoutResponsibility;
-    @Bind(R.id.label_responsibility)
-    TextView labelResponsibility;
-    @Bind(R.id.line_responsibility)
-    View lineResponsibility;
     @Bind(R.id.tv_responsibility)
     JPSelectView tvResponsibility;
-    @Bind(R.id.layout_driving_tools)
-    RelativeLayout layoutDrivingTools;
-    @Bind(R.id.label_driving_tools)
-    TextView labelDrivingTools;
-    @Bind(R.id.line_driving_tools)
-    View lineDrivingTools;
     @Bind(R.id.tv_driving_tools)
     JPSelectView tvDrivingTools;
 
+    /**
+     * 第三部分， ClearEditText的输入
+     */
+    @Bind(R.id.cet_salary)
+    ClearEditText cet_salary;
+    @Bind(R.id.cet_hospital_consume)
+    ClearEditText cet_hospital_custom;
+    @Bind(R.id.cet_hospital_days)
+    ClearEditText cet_hospital_days;
+    @Bind(R.id.cet_tardy_days)
+    ClearEditText cet_tardy_days;
+    @Bind(R.id.cet_nutrition_days)
+    ClearEditText cet_nutrition_days;
+    @Bind(R.id.cet_nursing_days)
+    ClearEditText cet_nursing_days;
 
-    @Bind(R.id.layout_hospital_consume)
-    RelativeLayout layoutHospitalConsume;
-    @Bind(R.id.label_hospital_consume)
-    TextView labelHospitalConsume;
-    @Bind(R.id.line_hospital_consume)
-    View lineHospitalConsume;
-    @Bind(R.id.layout_hospital_days)
-    RelativeLayout layoutHospitalDays;
-    @Bind(R.id.label_hospital_days)
-    TextView labelHospitalDays;
-    @Bind(R.id.line_hospital_days)
-    View lineHospitalDays;
-    @Bind(R.id.layout_tardy_days)
-    RelativeLayout layoutTardyDays;
-    @Bind(R.id.label_tardy_days)
-    TextView labelTardyDays;
-    @Bind(R.id.line_tardy_days)
-    View lineTardyDays;
-    @Bind(R.id.layout_nutrition_days)
-    RelativeLayout layoutNutritionDays;
-    @Bind(R.id.label_nutrition_days)
-    TextView labelNutritionDays;
-    @Bind(R.id.line_nutrition_days)
-    View lineNutritionDays;
-    @Bind(R.id.layout_nursing_days)
-    RelativeLayout layoutNursingDays;
-    @Bind(R.id.label_nursing_days)
-    TextView labelNursingDays;
-    @Bind(R.id.line_nursing_days)
-    View lineNursingDays;
 
-    @Bind(R.id.layout_family_custom)
-    RelativeLayout layoutFamilyCustom;
-    @Bind(R.id.label_family_custom)
-    TextView labelFamilyCustom;
-    @Bind(R.id.line_family_custom)
-    View lineFamilyCustom;
     @Bind(R.id.tv_family_custom)
     TextView tvFamilyCustom;
     @Bind(R.id.layout_add_relatives)
@@ -180,13 +132,14 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
         if (mRoot == null) {
             mRoot = inflater.inflate(R.layout.fragment_main, container, false);
         }
+        ButterKnife.bind(this, mRoot);
+
         return mRoot;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
         initView();
     }
@@ -215,9 +168,6 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
         btnChoiceLocation.setIndeterminateProgressMode(true);
         btnChoiceLocation.setOnClickListener(this);
 
-        layoutDrivingTools.setOnClickListener(this);
-        layoutFamilyCustom.setOnClickListener(this);
-        layoutHasSpouse.setOnClickListener(this);
         btnQuestion.setOnClickListener(this);
         tvFamilyCustom.setOnClickListener(this);
 
@@ -239,13 +189,13 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
             @Override
             protected BaseViewHolder createViewHolder(Context context, ViewGroup parent, int type) {
 //                return new RelativesMsgItemHolder(context,parent);
-                return new RelativesMsgItemHolder(context,parent);
+                return new RelativesMsgItemHolder(context, parent);
             }
         };
         msgBaseRecAdapter.setmOnItemClickListener(new OnItemClickListener<RelativeItemMsg>() {
             @Override
             public void onItemClick(RelativeItemMsg itemValue, int viewID, int position) {
-                switch (viewID){
+                switch (viewID) {
                     case R.id.iv_sub:
                         msgBaseRecAdapter.deleteData(itemValue);
                         break;
@@ -253,7 +203,7 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
             }
         });
         this.recRelativesMsg.addItemDecoration(new BaseRecViewDivider(getActivity(), LinearLayoutManager.HORIZONTAL));
-        this.recRelativesMsg.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false));
+        this.recRelativesMsg.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         this.recRelativesMsg.setAdapter(msgBaseRecAdapter);
     }
 
@@ -299,14 +249,14 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
 //                dialog.setPresenter(new RelativeMsgPresenter());
                 //TODO: 添加一行需抚养人
                 Logger.i("添加一行需抚养人");
-                msgBaseRecAdapter.addData(new RelativeItemMsg(0,60));
+                msgBaseRecAdapter.addData(new RelativeItemMsg(0, 60));
                 //TODO:并将整个MainFragment滚动到最底部
 //                mNestedScrollView.fullScroll(ScrollView.FOCUS_DOWN);
                 //
                 mHandler.post(new Runnable() {
                     public void run() {
                         mNestedScrollView.fullScroll(ScrollView.FOCUS_DOWN);
-                        recRelativesMsg.scrollToPosition(msgBaseRecAdapter.getItemCount()-1);
+                        recRelativesMsg.scrollToPosition(msgBaseRecAdapter.getItemCount() - 1);
                     }
                 });
                 break;
@@ -318,7 +268,52 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
         ///收集计算信息
         final Record record = new Record();
         ///TODO：开始收集信息，准备提交
+        record.setLocation(AMapLocationManager.getInstance(getActivity()).getLocation());
+        record.hurt_level = tvHurtlevel.getCurrentPos();
+        record.relatives_count = tvSisterCount.getCount();
+        record.has_spouse = (tvHasSpouse.getCurrentPos() != 0);
+        record.id_type = tvIdType.getCurrentPos();
+        record.responsibility = tvResponsibility.getCurrentPos();
+        record.driving_tools = tvDrivingTools.getCurrentPos();
+        ///月薪
+        if (TextUtils.isEmpty(cet_salary.getText().toString())) {
+            SnackUtil.show(cet_salary, "您的月薪不能为空");
+            return;
+        }
+        record.salary = Float.valueOf(cet_salary.getText().toString());
+        //医药费
+        if (TextUtils.isEmpty(cet_hospital_custom.getText().toString()))
+            record.medical_free = 0;
+        else
+            record.medical_free = Float.valueOf(cet_hospital_custom.getText().toString());
 
+        //住院天数
+        if (TextUtils.isEmpty(cet_hospital_days.getText().toString()))
+            record.hospital_days = 0;
+        else
+            record.hospital_days = Integer.valueOf(cet_hospital_days.getText().toString());
+
+        //误工天数
+        if (TextUtils.isEmpty(cet_tardy_days.getText().toString()))
+            record.tardy_days = 0;
+        else
+            record.tardy_days = Integer.valueOf(cet_tardy_days.getText().toString());
+
+        //营养期
+        if (TextUtils.isEmpty(cet_nutrition_days.getText().toString()))
+            record.nutrition_days = 0;
+        else
+            record.nutrition_days = Integer.valueOf(cet_nutrition_days.getText().toString());
+
+        //护理期
+        if (TextUtils.isEmpty(cet_nursing_days.getText().toString()))
+            record.nursing_days = 0;
+        else
+            record.nursing_days = Integer.valueOf(cet_nursing_days.getText().toString());
+
+        //需抚养人列表
+        List<RelativeItemMsg> relativeItemMsgList = this.msgBaseRecAdapter.getDataList();
+        record.setRelative_msg_list(relativeItemMsgList);
         this.mPresenter.startCalculate(record);
     }
 
@@ -332,15 +327,15 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
             public void run() {
                 btnRefreshLocation.setProgress(0);
             }
-        },2000);
+        }, 2000);
     }
 
     @Override
     public void showRecordResult(final RecordRes recordRes) {
-        if (sDialog!=null){
-            if (recordRes !=null){
+        if (sDialog != null) {
+            if (recordRes != null) {
                 sDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-                sDialog.setTitleText("理赔总额："+ recordRes.money_pay)
+                sDialog.setTitleText("理赔总额：" + recordRes.money_pay)
                         .setConfirmText("查看详情")
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
@@ -352,7 +347,7 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
                                 startActivity(intent);
                             }
                         });
-            }else{
+            } else {
                 sDialog.changeAlertType(SweetAlertDialog.WARNING_TYPE);
                 sDialog.setTitleText("计算失败")
                         .setCancelText("取消")
@@ -377,8 +372,7 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 11)
-        {
+        if (requestCode == 11) {
             String evaluate = data
                     .getStringExtra(RelativesMsgFragment.REQUSET_PERSON_COUNT);
             tvFamilyCustom.setText(evaluate);
@@ -389,7 +383,7 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
      * 咨询
      */
     @OnClick({R.id.fab_consult})
-    public void openConsultPage(View view){
+    public void openConsultPage(View view) {
         ///打开下方的咨询界面
 //        toggleConsultPage();
         Intent intent = new Intent(getActivity(), ConsultActivity.class);
@@ -401,10 +395,10 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
      * 准备计算
      */
     @OnClick(R.id.fab_calculate)
-    public void startCalculate(View view){
+    public void startCalculate(View view) {
 //        closeConsultPage();
 
-         sDialog = new SweetAlertDialog(getContext());
+        sDialog = new SweetAlertDialog(getContext());
         sDialog.setCancelable(true);
         sDialog.setTitleText("计算理赔？").setCancelText("取消").setConfirmText("开始计算")
                 .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
@@ -424,7 +418,7 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
                     public void run() {
                         mPresenter.prepareCalculate();
                     }
-                },2000);
+                }, 2000);
 //                mPresenter.prepareCalculate();
 
             }

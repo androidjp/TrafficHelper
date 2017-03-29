@@ -3,6 +3,7 @@ package com.androidjp.traffichelper.data.pojo;
 import com.androidjp.lib_common_util.data.NumberUtil;
 
 /**
+ * 用于显示：result项
  * Created by androidjp on 2017/3/20.
  */
 

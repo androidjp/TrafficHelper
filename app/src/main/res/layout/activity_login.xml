@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:hint="@string/hint_username"
-                    android:inputType="textEmailAddress|phone"
+                    android:inputType="textAutoComplete"
                     />
             </android.support.design.widget.TextInputLayout>
 
@@ -120,6 +120,25 @@
                     android:hint="@string/phone"
                     />
             </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/layout_et_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:padding="6dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="16">
+
+                <com.androidjp.lib_custom_view.edittext.ClearEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberSigned"
+                    android:textSize="16sp"
+                    android:hint="@string/input_age"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
 
             <RelativeLayout
                 android:layout_width="match_parent"

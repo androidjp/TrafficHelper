@@ -3,14 +3,17 @@ package com.androidjp.traffichelper.data.pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 
 /**
  * 理赔计算结果
  * Created by androidjp on 2016/12/27.
  */
-public class RecordRes implements Parcelable{
+public class RecordRes implements Parcelable {
 
-//    @PrimaryKey
+    //    @PrimaryKey
     private String result_id = null;//主键
     public float money_pay;///总花费（两位小数）
     public float money_hurt;//伤残赔偿金
@@ -20,6 +23,7 @@ public class RecordRes implements Parcelable{
     public float money_medical;//医药费
     public float money_nutrition;//营养费
     public float money_hospital_allowance;//住院伙食补贴
+    public float money_relatives;///需抚养人总要花费
     public float money_bury; //安葬费
     ///各个详情
     public String money_hurt_info;
@@ -29,9 +33,10 @@ public class RecordRes implements Parcelable{
     public String money_medical_info;//医药费
     public String money_nutrition_info;//营养费
     public String money_hospital_allowance_info;//住院伙食补贴
+    public String money_relatives_info;//需抚养人费用详情
     public String money_bury_info; //安葬费
 
-    public RecordRes(){
+    public RecordRes() {
 
     }
 
@@ -45,6 +50,7 @@ public class RecordRes implements Parcelable{
         money_medical = in.readFloat();
         money_nutrition = in.readFloat();
         money_hospital_allowance = in.readFloat();
+        money_relatives = in.readFloat();
         money_bury = in.readFloat();
         money_hurt_info = in.readString();
         money_heart_info = in.readString();
@@ -53,6 +59,7 @@ public class RecordRes implements Parcelable{
         money_medical_info = in.readString();
         money_nutrition_info = in.readString();
         money_hospital_allowance_info = in.readString();
+        money_relatives_info = in.readString();
         money_bury_info = in.readString();
     }
 
@@ -74,7 +81,7 @@ public class RecordRes implements Parcelable{
     }
 
     //计算所有费用
-    public void calculateAllPay(){
+    public void calculateAllPay() {
         money_pay = money_hurt
                 + money_heart
                 + money_hospital_allowance
@@ -82,6 +89,7 @@ public class RecordRes implements Parcelable{
                 + money_nutrition
                 + money_medical
                 + money_tardy
+                + money_relatives
                 + money_bury;
     }
 
@@ -101,6 +109,7 @@ public class RecordRes implements Parcelable{
         dest.writeFloat(money_nursing);
         dest.writeFloat(money_nutrition);
         dest.writeFloat(money_hospital_allowance);
+        dest.writeFloat(money_relatives);
         dest.writeFloat(money_bury);
         dest.writeString(money_hurt_info);
         dest.writeString(money_heart_info);
@@ -109,10 +118,19 @@ public class RecordRes implements Parcelable{
         dest.writeString(money_medical_info);//医药费
         dest.writeString(money_nutrition_info);//营养费
         dest.writeString(money_hospital_allowance_info);//住院伙食补贴
+        dest.writeString(money_relatives_info);
         dest.writeString(money_bury_info); //安葬费
     }
 
     public void setResult_id(String result_id) {
         this.result_id = result_id;
     }
+
+
+    public String toJsonString() {
+        Gson gson = new GsonBuilder().create();
+        String jsonStr = gson.toJson(this);
+        return jsonStr;
+    }
+
 }

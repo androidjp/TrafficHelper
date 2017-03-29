@@ -45,6 +45,8 @@ ext {
     retrofitVersion = "2.1.0"
     rxjavaVersion = "2.0.4"
     rxandroidVersion = "2.0.1"
+    gsonVersion ="2.8.0"
+    okHttpVersion = "3.6.0"
     mockitoVersion = '1.10.19'
     powerMockito = '1.6.2'
     hamcrestVersion = '1.3'

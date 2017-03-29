@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/id_login_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="12dp"
+    android:orientation="vertical"
+    android:padding="8dp"
+    app:cardBackgroundColor="@color/cardview_light_background"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:orientation="vertical">
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/layout_old_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:padding="6dp"
+            app:counterEnabled="false">
+
+            <com.androidjp.lib_custom_view.edittext.ClearEditText
+                android:id="@+id/cet_old_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:inputType="textAutoComplete"
+                android:textSize="16sp" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/layout_new_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:padding="6dp"
+            app:counterEnabled="false">
+
+            <com.androidjp.lib_custom_view.edittext.ClearEditText
+                android:id="@+id/cet_new_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textAutoComplete"
+                android:textSize="16sp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            >
+            <TextView
+                android:id="@+id/tv_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sex"
+                android:textSize="14sp"
+                android:layout_margin="6dp"
+                android:layout_centerVertical="true"
+                />
+            <RadioGroup
+                android:id="@+id/rg_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:orientation="horizontal"
+                android:layout_toRightOf="@id/tv_sex"
+                android:layout_centerVertical="true"
+                >
+                <RadioButton
+                    android:id="@+id/rbtn_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/male"
+                    android:checked="true"
+                    />
+                <RadioButton
+                    android:id="@+id/rbtn_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/female"
+                    />
+            </RadioGroup>
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/confirm"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_btn_blue"
+            />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

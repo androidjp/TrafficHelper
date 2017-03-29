@@ -1,6 +1,7 @@
 package com.androidjp.traffichelper.home;
 
 import android.content.Intent;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import com.androidjp.traffichelper.consult.ConsultActivity;
 import com.androidjp.traffichelper.consult.ConsultContract;
 import com.androidjp.traffichelper.consult.ConsultFragment;
 import com.androidjp.traffichelper.consult.ConsultPresenter;
+import com.androidjp.traffichelper.data.model.location.AMapLocationManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -86,17 +88,22 @@ public class MainActivity extends AppCompatActivity {
         mMainPresenter = new MainPresenter(THApplication.getContext(), mMainFramgent);
         mConsultPresenter = new ConsultPresenter(THApplication.getContext(),mConsultFragment);
 
-        mMainMenuFragment.setPresenter(mMainMenuPresenter);
-        mMainFramgent.setPresenter(mMainPresenter);
-        mConsultFragment.setPresenter(mConsultPresenter);
-
         ////设置自定义的上划Fragment
         BottomSheetBehavior.from(nestedScrollView).setState(BottomSheetBehavior.STATE_COLLAPSED);
 
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        mMainMenuFragment.setPresenter(mMainMenuPresenter);
+        mMainFramgent.setPresenter(mMainPresenter);
+        mConsultFragment.setPresenter(mConsultPresenter);
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+
         if (event.getKeyCode() == KeyEvent.KEYCODE_MENU) {
             mMenu.toggle();
             return true;
@@ -109,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -130,7 +138,13 @@ public class MainActivity extends AppCompatActivity {
                 }).show();
     }
 
-//    /**
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AMapLocationManager.getInstance(this).release();
+    }
+
+    //    /**
 //     * 咨询
 //     */
 //    @OnClick(R.id.fab_consult)

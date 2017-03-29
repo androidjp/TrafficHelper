@@ -6,8 +6,11 @@ import com.androidjp.traffichelper.data.pojo.Record;
 import com.androidjp.traffichelper.data.pojo.RecordRes;
 import com.androidjp.traffichelper.data.pojo.User;
 
+import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -15,9 +18,13 @@ import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 /**
  * 请求API集合类
@@ -26,7 +33,7 @@ import retrofit2.http.Query;
 
 public class ServiceAPI {
 
-    public static boolean IS_DEBUG = true;////如果是debug，则使用本地的服务端url，否则使用云端url
+    public static boolean IS_DEBUG = false;////如果是debug，则使用本地的服务端url，否则使用云端url
 
     /// debug 服务端地址
     public static final String SERVER_HOST = "http://10.0.2.2:8080/SpringDemo/";
@@ -34,13 +41,16 @@ public class ServiceAPI {
     public static final String REMOTE_SERVER_HOST = "http://139.199.6.201:8080/SpringDemo/";
 
 
-    private static final String LOGIN_PATH = "servlets/LoginServlet/";
-    private static final String REGISTER_PATH = "servlets/RegisterServlet/";
-    private static final String USER_MANAGER_PATH = "servlets/UserManager/";
-    private static final String RECORD_PATH = "servlets/RecordServlet/";
-    private static final String LOCATION_PATH = "servlets/LocationServlet/";
+    private static final String LOGIN_PATH = "servlets/login/LoginServlet";
+    private static final String REGISTER_PATH = "servlets/login/RegisterServlet";
+    private static final String USER_MANAGER_PATH = "servlets/user/UserServlet";
+    private static final String USER_PIC_UPLOAD_PATH = "servlets/upload/UploadServlet";
+    private static final String USER_PIC_UPLOAD_PATH_TEST = "servlets/upload/MyUploadServlet";
+    private static final String RECORD_QUERY_PATH = "servlets/record/RecordQueryServlet";
+    private static final String RECORD_ADD_PATH = "servlets/record/RecordAddServlet";
+    private static final String LOCATION_PATH = "servlets/LocationServlet";
 
-    private static final String TEST_PATH = "servlets/test/TestConnection/";
+    private static final String TEST_PATH = "servlets/test/TestConnection";
 
     ///----- 各种key -----------
 
@@ -61,45 +71,62 @@ public class ServiceAPI {
     public interface LoginAPI {
 
         ///登录
-        @POST(TEST_PATH)
+        @POST(LOGIN_PATH)
         @FormUrlEncoded
         Call<Result<User>> login(@Field("user_id") String user_id, @Field("user_pwd") String password);
 
         ///注册
-        @POST(TEST_PATH)
-        Call<Result<User>> register(@Body User user);
+        @POST(REGISTER_PATH)
+        @FormUrlEncoded
+        Call<Result<String>> register(@FieldMap Map<String,String> userMsgMap);
     }
 
     public interface UserAPI{
         ///更改昵称
-        @POST(USER_MANAGER_PATH)
-        Call<User> updateUserName(@Field("user_id") String user_id, @Field("user_name") String userName);
 
         @POST(USER_MANAGER_PATH)
-        Call<User> updateUserPic(@Field("user_id") String user_id, @Field("user_pic") String userPic);
+        @FormUrlEncoded
+        Call<Result<User>> updateUserName(@Field("user_id") String user_id, @Field("user_name") String userName);
+
+//        @POST(USER_MANAGER_PATH)
+//        Call<Result<User>>> updateUserPic(@Field("user_id") String user_id, @Field("user_pic") String userPic);
+
+
+
+        //原来 鸿洋的做法
+        @Multipart
+        @POST(USER_PIC_UPLOAD_PATH_TEST)
+        Call<Result<User>> updateUserPic(@Part("user_id") RequestBody user_id, @Part MultipartBody.Part file);
 
         @POST(USER_MANAGER_PATH)
-        Call<User> updateAge(@Field("user_id") String user_id, @Field("age") int age);
+        @FormUrlEncoded
+        Call<Result<User>> updateUserPwd(@Field("user_id") String user_id, @Field("user_pwd") String user_pwd);
 
         @POST(USER_MANAGER_PATH)
-        Call<User> updateUserPwd(@Field("user_id") String user_id, @Field("user_pwd") String user_pwd);
+        @FormUrlEncoded
+        Call<Result<User>> updateEmail(@Field("user_id") String user_id, @Field("email") String EMAIL);
 
         @POST(USER_MANAGER_PATH)
-        Call<User> updateEmail(@Field("user_id") String user_id, @Field("email") String EMAIL);
+        @FormUrlEncoded
+        Call<Result<User>> updateAge(@Field("user_id") String user_id, @Field("age") int age);
 
         @POST(USER_MANAGER_PATH)
-        Call<User> updatePhone(@Field("user_id") String user_id, @Field("phone") String phone);
+        @FormUrlEncoded
+        Call<Result<User>> updatePhone(@Field("user_id") String user_id, @Field("phone") String phone);
 
         @POST(USER_MANAGER_PATH)
-        Call<User> updateSex(@Field("user_id") String user_id, @Field("sex") int sex);
+        @FormUrlEncoded
+        Call<Result<User>> updateSex(@Field("user_id") String user_id, @Field("sex") int sex);
 
     }
 
 
     public interface RecordAPI {
         ///上传一个计算记录，并返回得到一个计算结果
-        @POST(RECORD_PATH)
-        Call<RecordRes> addRecord(@Body Record record);
+        @POST(RECORD_ADD_PATH)
+        Call<Result<RecordRes>> addRecord(@Body Record record);
+        @POST(RECORD_QUERY_PATH)
+        Call<Result<List<Record>>> queryRecordList(@Field("user_id")String user_id, @Field("page")int page);
     }
 
     public interface LocationAPI {

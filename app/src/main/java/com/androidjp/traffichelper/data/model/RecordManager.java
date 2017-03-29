@@ -1,6 +1,7 @@
 package com.androidjp.traffichelper.data.model;
 
 import com.androidjp.traffichelper.data.pojo.Record;
+import com.androidjp.traffichelper.data.pojo.RecordRes;
 
 /**
  * 实现与数据库的交互等
@@ -54,6 +55,14 @@ public class RecordManager {
 
 
     public void save(){
+
+    }
+
+    public void saveRecordList(){
+
+    }
+
+    public void saveRecordResForRecord(RecordRes recordRes){
 
     }
 }

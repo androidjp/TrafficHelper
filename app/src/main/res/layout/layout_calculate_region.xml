@@ -62,6 +62,7 @@
             app:cpb_selectorIdle="@drawable/selector_btn_idle"
             app:cpb_selectorComplete="@drawable/selector_btn_complete"
             app:cpb_selectorError="@drawable/selector_btn_error"
+            android:visibility="gone"
             />
 
     </RelativeLayout>

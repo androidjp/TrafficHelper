@@ -14,6 +14,8 @@
       <module fileurl="file://$PROJECT_DIR$/lib-jpuneng-slidingmenu/lib-jpuneng-slidingmenu.iml" filepath="$PROJECT_DIR$/lib-jpuneng-slidingmenu/lib-jpuneng-slidingmenu.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib-sweet-alert/lib-sweet-alert.iml" filepath="$PROJECT_DIR$/lib-sweet-alert/lib-sweet-alert.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib-turing-nlp/lib-turing-nlp.iml" filepath="$PROJECT_DIR$/lib-turing-nlp/lib-turing-nlp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/picture_library/picture_library.iml" filepath="$PROJECT_DIR$/picture_library/picture_library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ucrop/ucrop.iml" filepath="$PROJECT_DIR$/ucrop/ucrop.iml" />
     </modules>
   </component>
 </project>

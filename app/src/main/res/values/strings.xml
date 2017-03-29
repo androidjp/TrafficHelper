@@ -98,4 +98,8 @@
     <string name="app_settings">应用设置</string>
     <string name="close_app">退出App</string>
     <string name="no_data">暂无数据~ 下拉刷新看看</string>
+    <string name="your_salary">您的月薪</string>
+    <string name="input_your_salary">输入您的月薪</string>
+    <string name="confirm">确定</string>
+    <string name="logout">注销用户</string>
 </resources>

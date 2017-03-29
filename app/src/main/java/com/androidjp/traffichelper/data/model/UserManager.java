@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.androidjp.traffichelper.data.pojo.User;
+import com.orhanobut.logger.Logger;
 
 /**
  * 用户管理类
@@ -44,6 +45,14 @@ public class UserManager {
 
 
     /**
+     * 删除用户（包括：内存和SPF文件）
+     */
+    public void removeUser(){
+        this.mUser = null;
+        SharedPrefManager.getInstance().deleteUserMsg(mContext);
+    }
+
+    /**
      * 获取用户信息
      */
     public User getUser() {
@@ -55,8 +64,10 @@ public class UserManager {
         try {
             ///获取克隆体
             User user = mUser.clone();
-            if (user != null)
+            if (user != null){
+                Logger.i("从 UserManager.mUser中克隆出来的user不为空~");
                 return user;
+            }
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
             return null;
@@ -93,6 +104,7 @@ public class UserManager {
             this.mUser.setKind(user.getKind());
             this.mUser.setEmail(user.getEmail());
             this.mUser.setPhone(user.getPhone());
+            this.mUser.setAge(user.getAge());
             if (!TextUtils.isEmpty(user.getUser_pic()))
                 this.mUser.setUser_pic(user.getUser_pic());
         }
@@ -103,7 +115,7 @@ public class UserManager {
         if (isUserLegal(this.mUser))
         SharedPrefManager.getInstance().saveUserMsg(
                 this.mContext,this.mUser.getUser_id(),this.mUser.getUser_name(),this.mUser.getUser_pwd(),
-                this.mUser.getEmail(),this.mUser.getPhone(),this.mUser.getSex(),this.mUser.getUser_pic()
+                this.mUser.getEmail(),this.mUser.getPhone(),this.mUser.getSex(),this.mUser.getUser_pic(),this.mUser.getAge()
                 );
     }
 

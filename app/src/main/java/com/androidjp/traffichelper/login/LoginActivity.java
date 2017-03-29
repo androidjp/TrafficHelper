@@ -43,6 +43,8 @@ public class LoginActivity extends SwipeBackActivity implements LoginContract.Vi
     TextInputLayout layoutEtEmail;
     @Bind(R.id.layout_et_phone)
     TextInputLayout layoutEtPhone;
+    @Bind(R.id.layout_et_age)
+    TextInputLayout layoutAge;
     @Bind(R.id.tv_sex)
     TextView tvSex;
     @Bind(R.id.rg_sex)
@@ -115,11 +117,13 @@ public class LoginActivity extends SwipeBackActivity implements LoginContract.Vi
     @OnClick(R.id.btn_register)
     void onBtnRegisterClick() {
         Logger.i("LoginActivity, onBtnRegisterClick()");
+
+
         this.mPresenter.register(layoutEtUsernameLogin.getEditText().getText().toString()
                 , layoutEtPasswordLogin.getEditText().getText().toString()
                 , layoutEtEmail.getEditText().getText().toString()
                 , layoutEtPhone.getEditText().getText().toString()
-                , (rbtnMale.isChecked() ? 0 : 1));
+                , (rbtnMale.isChecked() ? 0 : 1), layoutAge.getEditText().getText().toString());
     }
 
 
@@ -131,9 +135,11 @@ public class LoginActivity extends SwipeBackActivity implements LoginContract.Vi
     @Override
     public void showLoginPage() {
         mToolbar.setTitle(getResources().getString(R.string.login));
+        layoutEtUsernameLogin.setHint("输入手机号码/邮箱");
         layoutEtPhone.setVisibility(View.GONE);
         layoutEtPasswordRe.setVisibility(View.GONE);
         layoutEtEmail.setVisibility(View.GONE);
+        layoutAge.setVisibility(View.GONE);
         tvSex.setVisibility(View.GONE);
         rgSex.setVisibility(View.GONE);
         btnLogin.setVisibility(View.VISIBLE);
@@ -143,11 +149,13 @@ public class LoginActivity extends SwipeBackActivity implements LoginContract.Vi
     @Override
     public void showRegisterPage() {
         mToolbar.setTitle(getResources().getString(R.string.register));
+        layoutEtUsernameLogin.setHint("输入昵称");
         layoutEtPhone.setVisibility(View.VISIBLE);
         layoutEtPasswordRe.setVisibility(View.VISIBLE);
         layoutEtEmail.setVisibility(View.VISIBLE);
         tvSex.setVisibility(View.VISIBLE);
         rgSex.setVisibility(View.VISIBLE);
+        layoutAge.setVisibility(View.VISIBLE);
         btnLogin.setVisibility(View.GONE);
     }
 
@@ -156,7 +164,14 @@ public class LoginActivity extends SwipeBackActivity implements LoginContract.Vi
         ///显示错误信息
         SweetAlertDialog dialog = new SweetAlertDialog(this);
         dialog.changeAlertType(SweetAlertDialog.WARNING_TYPE);
-        dialog.setTitleText(msg).show();
+        dialog.setTitleText(msg)
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismissWithAnimation();
+                    }
+                })
+                .show();
 
     }
 
@@ -170,14 +185,13 @@ public class LoginActivity extends SwipeBackActivity implements LoginContract.Vi
     }
 
     @Override
-    public void hideProgress(boolean isOk, String msg) {
-        if (mDialog != null)
-            if (isOk) {
-                mDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-                mDialog.setTitleText(msg).dismissWithAnimation();
-                setResult(Constants.FINISH_LOGIN);
-                LoginActivity.this.finish();
-            } else {
+    public void hideProgress(int resultFlag, String msg) {
+        if (mDialog == null)
+            mDialog = new SweetAlertDialog(this);
+
+        switch (resultFlag) {
+            case Constants.FAIL_LOGIN:
+            case Constants.FAIL_REGUSTER:
                 mDialog.changeAlertType(SweetAlertDialog.WARNING_TYPE);
                 mDialog.setTitleText(msg);
                 mDialog.setCancelable(true);
@@ -185,12 +199,36 @@ public class LoginActivity extends SwipeBackActivity implements LoginContract.Vi
 
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        if (mDialog!=null)
-                        mDialog.dismissWithAnimation();
+                        if (mDialog != null)
+                            mDialog.dismissWithAnimation();
                     }
                 });
-            }
-        mDialog = null;
+                break;
+
+            case Constants.FINISH_LOGIN:
+                mDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                mDialog.setCancelable(false);
+                mDialog.setTitleText(msg).setConfirmText("OK,回到主页").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismissWithAnimation();
+                        setResult(Constants.FINISH_LOGIN);
+                        LoginActivity.this.finish();
+                    }
+                });
+                break;
+            case Constants.FINISH_REGISTER:
+                mDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                mDialog.setCancelable(false);
+                mDialog.setTitleText(msg).setConfirmText("回到登录页").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismissWithAnimation();
+                        showLoginPage();
+                    }
+                });
+                break;
+        }
     }
 
     @Override

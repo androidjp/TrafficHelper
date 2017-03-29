@@ -304,4 +304,10 @@ public class SharedPrefHelper {
     }
 
 
+    /**
+     * 删除指定字段
+     */
+    public boolean deleteKeyValue(String key){
+        return editor.remove(key).commit();
+    }
 }

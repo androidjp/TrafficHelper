@@ -99,6 +99,14 @@ dependencies {
     // 网络请求库：Retrofit2
     compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    //Retrofit2 CallAdapter 之 Rxjava适配（Call<ResponseBody> -> Observable<XXX>）
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
+    //Gson
+    compile "com.google.code.gson:gson:$rootProject.gsonVersion"
+    //okHttp
+    compile "com.squareup.okhttp3:okhttp:$rootProject.okHttpVersion"
+    //OKHttp下的日志拦截器（Retrofit2 配置拦截器，用于查看log）
+    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.okHttpVersion"
     // RxJava RxAndroid 异步库
     compile "io.reactivex.rxjava2:rxjava:$rootProject.rxjavaVersion"
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
@@ -119,4 +127,5 @@ dependencies {
     compile 'com.skyfishjy.ripplebackground:library:1.0.1'
     compile project(':lib-baidu-asr')
     compile project(':lib-turing-nlp')
+    compile project(':picture_library')
 }
