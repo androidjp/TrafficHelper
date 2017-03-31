@@ -1,7 +1,5 @@
 package com.androidjp.traffichelper.data.pojo;
 
-import com.androidjp.lib_common_util.data.StringRandomUtil;
-
 /**
  * 定位信息
  * Created by androidjp on 2017/1/4.

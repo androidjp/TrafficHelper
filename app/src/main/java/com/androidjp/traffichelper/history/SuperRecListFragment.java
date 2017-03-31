@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.androidjp.lib_common_util.ui.DisplayUtil;
 import com.androidjp.lib_great_recyclerview.base.BaseRecAdapter;
 import com.androidjp.lib_great_recyclerview.base.OnItemClickListener;
 import com.androidjp.traffichelper.R;
@@ -21,6 +22,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
+ * 带有 SwipeRefreshLayout 和 上下拉刷新加载 的Fragment
  * Created by androidjp on 2017/3/23.
  */
 
@@ -124,6 +126,10 @@ public abstract class SuperRecListFragment<V> extends Fragment implements OnItem
 
     protected boolean isSlideToBottom(RecyclerView recyclerView) {
         if (recyclerView == null) return false;
+        //特殊情况（recyclerview总体的高度都没有达到屏幕高度，那么直接就是false）
+        //说明： Extent：recyclerview在屏幕可视位置占的高度 ， Offset：recyclerview向上溢出的高度 ， Range：整个RecyclerView的高度
+        if (recyclerView.computeVerticalScrollRange()<= DisplayUtil.getScreenHeight(getActivity()))
+            return false;
         if (recyclerView.computeVerticalScrollExtent() + recyclerView.computeVerticalScrollOffset() >= recyclerView.computeVerticalScrollRange())
             return true;
         return false;

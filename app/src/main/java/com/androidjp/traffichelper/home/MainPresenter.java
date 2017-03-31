@@ -57,9 +57,13 @@ public class MainPresenter implements MainContract.Presenter, AMapLocationManage
 
     @Override
     public void startCalculate(final Record record) {
+        if (record.getLocation()==null)
+            record.setLocation(AMapLocationManager.getInstance(mContext).getLocation());
+
+        record.record_time = System.currentTimeMillis();
+
         ///TODO: 根据初步的理赔计算公式 ，开始计算
         Logger.i("发送给后端计算前的record："+ record.toJsonString());
-
         //TODO:使用Retrofit2 上传Record并后端计算
         ServiceAPI.RecordAPI recordAPI = ServiceGenerator.createService(ServiceAPI.RecordAPI.class);
         Call<Result<RecordRes>> call = recordAPI.addRecord(record);

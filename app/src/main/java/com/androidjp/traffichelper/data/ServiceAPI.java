@@ -1,5 +1,6 @@
 package com.androidjp.traffichelper.data;
 
+import com.androidjp.lib_baidu_asr.data.Constant;
 import com.androidjp.lib_common_util.pojo.network.Result;
 import com.androidjp.traffichelper.data.pojo.Location;
 import com.androidjp.traffichelper.data.pojo.Record;
@@ -40,6 +41,9 @@ public class ServiceAPI {
     /// release 服务端地址
     public static final String REMOTE_SERVER_HOST = "http://139.199.6.201:8080/SpringDemo/";
 
+    public static  final int PAGE_COUNT = 8;///设定每页加载item数量最多为8个
+
+
 
     private static final String LOGIN_PATH = "servlets/login/LoginServlet";
     private static final String REGISTER_PATH = "servlets/login/RegisterServlet";
@@ -48,22 +52,13 @@ public class ServiceAPI {
     private static final String USER_PIC_UPLOAD_PATH_TEST = "servlets/upload/MyUploadServlet";
     private static final String RECORD_QUERY_PATH = "servlets/record/RecordQueryServlet";
     private static final String RECORD_ADD_PATH = "servlets/record/RecordAddServlet";
+    private static final String RECORD_DETAIL_PATH = "servlets/record/RecordDetailServlet";
     private static final String LOCATION_PATH = "servlets/LocationServlet";
 
     private static final String TEST_PATH = "servlets/test/TestConnection";
 
     ///----- 各种key -----------
 
-    ///User信息
-    public static final String USER_ID = "user_id";
-    public static final String USER_NAME = "user_name";
-    public static final String USER_PWD = "user_pwd";
-    public static final String EMAIL = "email";
-    public static final String PHONE = "phone";
-    public static final String SEX = "sex";
-    public static final String KIND = "kind";
-    public static final String USER_PIC = "user_pic";
-    public static final String AGE = "age";
 
     /// Record 记录
 
@@ -125,8 +120,11 @@ public class ServiceAPI {
         ///上传一个计算记录，并返回得到一个计算结果
         @POST(RECORD_ADD_PATH)
         Call<Result<RecordRes>> addRecord(@Body Record record);
+        // 参数： user_id + 当前请求页 + （如果是下拉刷新，则获取新增的record 列表，此时需要本地的第一个pos的record_id ，以确定是否有新的record产生）
         @POST(RECORD_QUERY_PATH)
-        Call<Result<List<Record>>> queryRecordList(@Field("user_id")String user_id, @Field("page")int page);
+        Call<Result<List<Record>>> queryRecordList(@Field(Constants.USER_ID)String user_id, @Field(Constants.PAGE)int page ,@Field(Constants.FIRST_RECORD_ID) String first_record_id);
+        @POST(RECORD_DETAIL_PATH)
+        Call<Result<RecordRes>> getRecordDetail(@Field(Constants.USER_ID) String user_id, @Field(Constants.RESULT_ID) String result_id);
     }
 
     public interface LocationAPI {

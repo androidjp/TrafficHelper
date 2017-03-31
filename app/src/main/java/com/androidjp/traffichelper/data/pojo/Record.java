@@ -125,6 +125,11 @@ public class Record implements Cloneable {
 
     public void setRelative_msg_list(List<RelativeItemMsg> relative_msg_list) {
         this.relative_msg_list = relative_msg_list;
+        if (this.relative_msg_list!=null && this.relative_msg_list.size()>0){
+            for (RelativeItemMsg item: this.relative_msg_list){
+                item.setRecord_id(this.record_id);
+            }
+        }
     }
 
     public String getPay() {

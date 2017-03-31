@@ -1,6 +1,7 @@
 package com.androidjp.traffichelper.history;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,20 +13,20 @@ import android.widget.Toast;
 import com.androidjp.lib_common_util.ui.SnackUtil;
 import com.androidjp.lib_great_recyclerview.base.BaseRecAdapter;
 import com.androidjp.lib_great_recyclerview.base.BaseViewHolder;
-import com.androidjp.lib_great_recyclerview.extra.RecListFragment;
 import com.androidjp.traffichelper.R;
 import com.androidjp.traffichelper.adapter.RecordHolder;
 import com.androidjp.traffichelper.data.pojo.Record;
+import com.androidjp.traffichelper.data.pojo.RecordRes;
+import com.androidjp.traffichelper.result.ResultActivity;
 
 import java.util.List;
 
 /**
- *
  * 带HeaderView的分页加载LinearLayout RecyclerView
  * Created by androidjp on 2017/3/22.
  */
 
-public class RecordListFragment extends SuperRecListFragment<Record> implements HistoryContract.View{
+public class RecordListFragment extends SuperRecListFragment<Record> implements HistoryContract.View {
 
     private HistoryContract.Presenter mPresenter;
 
@@ -43,7 +44,7 @@ public class RecordListFragment extends SuperRecListFragment<Record> implements 
 
             @Override
             protected BaseViewHolder createViewHolder(Context context, ViewGroup parent, int type) {
-                return new RecordHolder(context,parent);
+                return new RecordHolder(context, parent);
             }
         };
     }
@@ -60,13 +61,13 @@ public class RecordListFragment extends SuperRecListFragment<Record> implements 
         setLoadlListener(new LoadListener() {
             @Override
             public void refreshDoing() {
-                Toast.makeText(getActivity(),"下拉刷新。。。",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "下拉刷新。。。", Toast.LENGTH_SHORT).show();
                 mPresenter.refresh();
             }
 
             @Override
             public void askForMoreDoing() {
-                Toast.makeText(getActivity(),"加载更多。。。",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "加载更多。。。", Toast.LENGTH_SHORT).show();
                 showFooter();
                 mPresenter.loadMore();
             }
@@ -100,17 +101,31 @@ public class RecordListFragment extends SuperRecListFragment<Record> implements 
 
     @Override
     public void onItemClick(Record itemValue, int viewID, int position) {
-        Toast.makeText(getActivity(),"点击事件",Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(),"点击事件",Toast.LENGTH_SHORT).show();
+        //TODO:加载详情
+        this.mPresenter.loadDetail(position, itemValue);
+    }
+
+    @Override
+    public List<Record> getRecDataList() {
+        return getAdapter().getDataList();
     }
 
     @Override
     public void refreshRecordList(int page, List<Record> recordList) {
-        if (page==0){
-            getAdapter().addList(0,recordList);
+        if (page == 0) {
+            if (recordList == null || recordList.size() == 0) {
+                hideHeader();
+                refreshEmptyView();
+                SnackUtil.show(getView(), "您没有新的理赔记录了。。");
+                return;
+            }
+            ///有新的数据，加载进去
+            getAdapter().addList(0, recordList);
             hideHeader();
             refreshEmptyView();
             //TODO：此时，如果没有更多的数据，应该显示footView，并点击footView可加载更多
-            if (isSlideToBottom(mRecView)){
+            if (isSlideToBottom(mRecView)) {
                 showFooter();
                 mFootView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -119,8 +134,7 @@ public class RecordListFragment extends SuperRecListFragment<Record> implements 
                     }
                 });
             }
-
-        }else{
+        } else {
             getAdapter().addList(recordList);
             hideFooter();
             refreshEmptyView();
@@ -128,7 +142,20 @@ public class RecordListFragment extends SuperRecListFragment<Record> implements 
     }
 
     @Override
+    public void finishLoadDetail(int pos, RecordRes recordRes) {
+        if (this.getRecDataList().get(pos).getResult() == null) {
+            if (recordRes != null)
+                this.getRecDataList().get(pos).setResult(recordRes);
+        }
+        Intent intent =new Intent(getActivity(), ResultActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("result",this.getRecDataList().get(pos).getResult());
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    @Override
     public void loadFail(String msg) {
-        SnackUtil.show(mSwipeRefreshLayout,msg);
+        SnackUtil.show(mSwipeRefreshLayout, msg);
     }
 }
