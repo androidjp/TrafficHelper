@@ -707,22 +707,41 @@ public class JPSelectView extends View {
      * 根据当前count数量 初始化 hint提示语相关变量
      */
     private void initAnimSettings() {
-        if (mCount == 0) {
-            // 0 不显示 数字和-号
-            mAnimFraction = 1;
-        } else {
-            mAnimFraction = 0;
-        }
+       if (this.currentType == TYPE_NUMBER){
+           if (mCount == 0) {
+               // 0 不显示 数字和-号
+               mAnimFraction = 1;
+           } else {
+               mAnimFraction = 0;
+           }
 
-        if (mCount == 0) {
-            isHintMode = true;
-            isShowHintText = true;
-            mAnimExpandHintFraction = 0;
-        } else {
-            isHintMode = false;
-            isShowHintText = false;
-            mAnimExpandHintFraction = 1;
-        }
+           if (mCount == 0) {
+               isHintMode = true;
+               isShowHintText = true;
+               mAnimExpandHintFraction = 0;
+           } else {
+               isHintMode = false;
+               isShowHintText = false;
+               mAnimExpandHintFraction = 1;
+           }
+       }else{
+           if (mCount == 0) {
+               // 0 不显示 数字和-号
+               mAnimFraction = 1;
+           } else {
+               mAnimFraction = 0;
+           }
+
+           if (mCount == 0) {
+               isHintMode = true;
+               isShowHintText = true;
+               mAnimExpandHintFraction = 0;
+           } else {
+               isHintMode = false;
+               isShowHintText = false;
+               mAnimExpandHintFraction = 1;
+           }
+       }
     }
 
     @Override
@@ -975,6 +994,7 @@ public class JPSelectView extends View {
                 break;
             case TYPE_STRING:
                 if (this.currentPos < this.stringList.length - 1) {
+                    ++this.mCount;
                     ++this.currentPos;
                     this.onCountAddSuccess();
                     if (null != this.mOnChangeStringListener) {
