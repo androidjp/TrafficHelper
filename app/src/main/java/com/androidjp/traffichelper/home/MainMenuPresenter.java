@@ -91,6 +91,11 @@ class MainMenuPresenter implements MainMenuContract.Presenter {
             if (this.mView.get() != null) {
                 this.mView.get().refreshUserMsg(null);
             }
+        } else{
+            ///默认情况下
+            if (this.mView.get() != null) {
+                this.mView.get().refreshUserMsg(UserManager.getInstance(THApplication.getContext()).getUser());
+            }
         }
 
     }
@@ -116,8 +121,13 @@ class MainMenuPresenter implements MainMenuContract.Presenter {
 
     @Override
     public void gotoHistory() {
-        if(mView!=null)
-            mView.get().gotoActivity(HistoryActivity.class.getSimpleName(),new Intent());
+        if (UserManager.getInstance(THApplication.getContext()).getUser()==null) {
+            if (mView!=null)
+                mView.get().gotoActivity(LoginActivity.class.getSimpleName(),new Intent());
+        } else {
+            if (mView != null)
+                mView.get().gotoActivity(HistoryActivity.class.getSimpleName(), new Intent());
+        }
     }
 
     @Override

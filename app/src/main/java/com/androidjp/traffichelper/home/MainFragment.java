@@ -199,6 +199,10 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
                     case R.id.iv_sub:
                         msgBaseRecAdapter.deleteData(itemValue);
                         break;
+                    ///TODO:子女/父母选择问题
+                    case R.id.jsv_relatives_msg:
+                        break;
+                    ///TODO:年龄
                 }
             }
         });
@@ -340,6 +344,7 @@ public class MainFragment extends Fragment implements MainContract.View, View.On
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismissWithAnimation();
                                 Intent intent = new Intent(getActivity(), ResultActivity.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putParcelable("recordRes", recordRes);

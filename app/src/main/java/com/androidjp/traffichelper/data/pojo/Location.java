@@ -1,10 +1,12 @@
 package com.androidjp.traffichelper.data.pojo;
 
+import org.litepal.crud.DataSupport;
+
 /**
  * 定位信息
  * Created by androidjp on 2017/1/4.
  */
-public class Location{
+public class Location extends DataSupport{
     //    @PrimaryKey
     private String location_id;
     public String city;

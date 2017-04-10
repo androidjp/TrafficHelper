@@ -1,6 +1,7 @@
 package com.androidjp.traffichelper.home;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
@@ -25,6 +26,8 @@ import com.androidjp.traffichelper.consult.ConsultContract;
 import com.androidjp.traffichelper.consult.ConsultFragment;
 import com.androidjp.traffichelper.consult.ConsultPresenter;
 import com.androidjp.traffichelper.data.model.location.AMapLocationManager;
+
+import org.litepal.LitePal;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -62,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        ///TODO：尝试使用LitePal
+        SQLiteDatabase db = LitePal.getDatabase();
 
         mMainMenuFragment = (MainMenuContract.View) getSupportFragmentManager().findFragmentById(R.id.frame_menu);
         mMainFramgent = (MainContract.View) getSupportFragmentManager().findFragmentById(R.id.frame_content);

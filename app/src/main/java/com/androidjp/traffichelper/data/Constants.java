@@ -63,7 +63,7 @@ public class Constants {
 
     ///需抚养人信息
     public static final String RELATIVE_ITEM_MSG_ID = "relative_item_msg_id";
-    public static final String RELATIVE = "relative";
+    public static final String RELATION = "relation";
 
 
     //location 信息

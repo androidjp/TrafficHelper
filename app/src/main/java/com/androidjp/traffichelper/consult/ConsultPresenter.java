@@ -1,6 +1,7 @@
 package com.androidjp.traffichelper.consult;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,16 +17,22 @@ import android.util.Log;
 import com.androidjp.lib_baidu_asr.BaiduASR;
 import com.androidjp.lib_turing_nlp.ChatManager;
 import com.androidjp.traffichelper.R;
+import com.androidjp.traffichelper.THApplication;
+import com.androidjp.traffichelper.data.model.UserManager;
+import com.androidjp.traffichelper.data.model.litepal.DBManager;
 import com.androidjp.traffichelper.data.pojo.Dialogue;
 import com.baidu.speech.VoiceRecognitionService;
 import com.orhanobut.logger.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.litepal.crud.DataSupport;
+import org.litepal.crud.callback.FindMultiCallback;
 
 import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static com.androidjp.lib_baidu_asr.asr.ASRStatus.STATUS_None;
 import static com.androidjp.lib_baidu_asr.asr.ASRStatus.STATUS_Ready;
@@ -40,8 +47,7 @@ import static com.androidjp.lib_baidu_asr.asr.ASRStatus.STATUS_WaitingReady;
 
 public class ConsultPresenter implements ConsultContract.Presenter
         , RecognitionListener
-        , ChatManager.ChatListener
-{
+        , ChatManager.ChatListener {
     private Context mContext;
     private SoftReference<ConsultContract.View> mView;
     ///相关参数
@@ -49,6 +55,8 @@ public class ConsultPresenter implements ConsultContract.Presenter
     private long time;
     private long speechEndTime = -1;
     private static final int EVENT_ERROR = 11;
+
+    private List<Dialogue> mDialogueList = new ArrayList<>();
 
 
     public ConsultPresenter(Context mContext, ConsultContract.View mView) {
@@ -58,7 +66,13 @@ public class ConsultPresenter implements ConsultContract.Presenter
 
     @Override
     public void sendQuestion(String question) {
-        Dialogue que = new Dialogue("-1", null, question);
+        String userId = UserManager.getInstance(THApplication.getContext()).getUserId();
+        Dialogue que = null;
+        if (userId != null)
+            que = new Dialogue(userId, question);
+        else
+            que = new Dialogue("-1", question);
+        que.save();
         if (this.mView.get() != null) {
             this.mView.get().showQuestion(que);
             this.mView.get().showSpeechText("");
@@ -88,6 +102,7 @@ public class ConsultPresenter implements ConsultContract.Presenter
 
     @Override
     public void start() {
+        ///TODO：这里，当然需要先让View加载出Loading界面
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!Settings.System.canWrite(mContext)) {
                 Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
@@ -96,6 +111,20 @@ public class ConsultPresenter implements ConsultContract.Presenter
                 mContext.startActivity(intent);
             }
         }
+        DBManager.getInstance().getDialogueList(new FindMultiCallback() {
+            @Override
+            public <T> void onFinish(List<T> t) {
+                mDialogueList = (List<Dialogue>) t;
+                if (mDialogueList == null){
+                    if (mView!=null)
+                        mView.get().loadList(null);
+                }else{
+                    if (mView!=null)
+                        mView.get().loadList(mDialogueList);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -288,8 +317,10 @@ public class ConsultPresenter implements ConsultContract.Presenter
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 String answer = jsonObject.getString("text");
+                Dialogue dialogue = new Dialogue(null, answer);
+                dialogue.save();
                 if (this.mView != null)
-                    this.mView.get().showAnswer(new Dialogue(null, null, answer));
+                    this.mView.get().showAnswer(dialogue);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -299,6 +330,6 @@ public class ConsultPresenter implements ConsultContract.Presenter
     @Override
     public void onChatFail(int i, String s) {
         if (mView != null)
-            mView.get().showAnswer(new Dialogue(null, null, i + " , " + s));
+            mView.get().showAnswer(new Dialogue(null, i + " , " + s));
     }
 }

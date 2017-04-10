@@ -17,6 +17,7 @@ import com.orhanobut.logger.Logger;
 import com.yalantis.ucrop.entity.LocalMedia;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.lang.ref.SoftReference;
 import java.util.List;
 
@@ -110,6 +111,16 @@ public class UserPresenter implements UserContract.Presenter {
             return;
         if (mView!=null)
             mView.get().loading();
+
+        try {
+            Logger.i("原来的user_name是"+newName+", 长度是"+newName.getBytes().length);
+            Logger.i("utf-8后, 长度是"+new String(newName.getBytes(),"utf-8").getBytes().length);
+            newName = new String(newName.getBytes(),"utf-8");
+        } catch (UnsupportedEncodingException e) {
+            Logger.e("UserPresenter","昵称修改出问题了！！！编码转换异常");
+            e.printStackTrace();
+        }
+
         ServiceAPI.UserAPI userAPI = ServiceGenerator.createService(ServiceAPI.UserAPI.class);
         Call<Result<User>> call = userAPI.updateUserName(UserManager.getInstance(THApplication.getContext()).getUserId(),newName);
         call.enqueue(new Callback<Result<User>>() {

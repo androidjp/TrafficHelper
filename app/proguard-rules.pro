@@ -85,3 +85,11 @@
 -printusage unused.txt
 # 混淆前后的映射
 -printmapping mapping.txt
+
+# LitePal ORM框架 混淆配置
+-keep class org.litepal.** {
+    *;
+}
+-keep class * extends org.litepal.crud.DataSupport {
+    *;
+}

@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.litepal.crud.DataSupport;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.Map;
  * <p>
  * Created by androidjp on 2016/12/25.
  */
-public class Record implements Cloneable {
+public class Record extends DataSupport implements Cloneable {
 
     //    @PrimaryKey
     private String record_id;//（主键）

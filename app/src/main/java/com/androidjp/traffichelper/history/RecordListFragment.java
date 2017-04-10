@@ -103,7 +103,8 @@ public class RecordListFragment extends SuperRecListFragment<Record> implements 
     public void onItemClick(Record itemValue, int viewID, int position) {
 //        Toast.makeText(getActivity(),"点击事件",Toast.LENGTH_SHORT).show();
         //TODO:加载详情
-        this.mPresenter.loadDetail(position, itemValue);
+        if (viewID == 123321)
+            this.mPresenter.loadDetail(position, itemValue);
     }
 
     @Override
@@ -147,9 +148,9 @@ public class RecordListFragment extends SuperRecListFragment<Record> implements 
             if (recordRes != null)
                 this.getRecDataList().get(pos).setResult(recordRes);
         }
-        Intent intent =new Intent(getActivity(), ResultActivity.class);
+        Intent intent = new Intent(getActivity(), ResultActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putParcelable("result",this.getRecDataList().get(pos).getResult());
+        bundle.putParcelable("recordRes", this.getRecDataList().get(pos).getResult());
         intent.putExtras(bundle);
         startActivity(intent);
     }

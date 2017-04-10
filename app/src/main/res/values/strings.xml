@@ -102,4 +102,5 @@
     <string name="input_your_salary">输入您的月薪</string>
     <string name="confirm">确定</string>
     <string name="logout">注销用户</string>
+    <string name="clear_dialogue">清空对话记录</string>
 </resources>

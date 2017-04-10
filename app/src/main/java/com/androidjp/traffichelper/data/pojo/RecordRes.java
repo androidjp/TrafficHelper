@@ -6,12 +6,14 @@ import android.os.Parcelable;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.litepal.crud.DataSupport;
+
 
 /**
  * 理赔计算结果
  * Created by androidjp on 2016/12/27.
  */
-public class RecordRes implements Parcelable {
+public class RecordRes extends DataSupport implements Parcelable {
 
     //    @PrimaryKey
     private String result_id = null;//主键

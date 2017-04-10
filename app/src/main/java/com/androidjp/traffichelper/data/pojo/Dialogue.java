@@ -1,20 +1,22 @@
 package com.androidjp.traffichelper.data.pojo;
 
-import android.graphics.Bitmap;
+
+import org.litepal.crud.DataSupport;
 
 /**
  * 咨询 -- 对话内容
  * Created by androidjp on 2017/1/5.
  */
-public class Dialogue{
+public class Dialogue extends DataSupport{
 
     private String user_id;///null 表示robot
-    private Bitmap pic;
     public String word;
+    private long dialogue_time;///记录问答时间
 
-    public Dialogue(String user_id,Bitmap pic,  String word) {
+    public Dialogue(String user_id, String word) {
         this.user_id = user_id;
         this.word = word;
+        this.dialogue_time = System.currentTimeMillis();
     }
 
     public String getUser_id() {
@@ -25,11 +27,12 @@ public class Dialogue{
         this.user_id = user_id;
     }
 
-    public Bitmap getPic() {
-        return pic;
+
+    public long getDialogue_time() {
+        return dialogue_time;
     }
 
-    public void setPic(Bitmap pic) {
-        this.pic = pic;
+    public void setDialogue_time(long dialogue_time) {
+        this.dialogue_time = dialogue_time;
     }
 }

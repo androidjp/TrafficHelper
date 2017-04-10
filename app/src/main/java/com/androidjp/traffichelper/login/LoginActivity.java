@@ -178,7 +178,7 @@ public class LoginActivity extends SwipeBackActivity implements LoginContract.Vi
     @Override
     public void showProgress(String msg) {
         //显示加载中提示框
-        if (mDialog == null)
+//        if (mDialog == null)
             mDialog = new SweetAlertDialog(this);
         mDialog.changeAlertType(SweetAlertDialog.PROGRESS_TYPE);
         mDialog.setTitleText(msg).show();

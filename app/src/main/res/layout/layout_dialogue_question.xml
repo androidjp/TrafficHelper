@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         tools:text="你好！我是来问问题的"
         android:textColor="@color/white"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:paddingRight="20dp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"

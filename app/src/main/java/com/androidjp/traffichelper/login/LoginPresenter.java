@@ -88,11 +88,11 @@ public class LoginPresenter implements LoginContract.Presenter {
 
             @Override
             public void onFailure(Call<Result<User>> call, Throwable t) {
-//                Logger.e(t.toString());
-//                if (mView != null)
-//                    mView.get().hideProgress(Constants.FAIL_LOGIN, "登录异常");
-                if (mView!=null)
-                    mView.get().hideProgress(Constants.FINISH_LOGIN,"登录成功");
+                Logger.e(t.toString());
+                if (mView != null)
+                    mView.get().hideProgress(Constants.FAIL_LOGIN, "登录异常");
+//                if (mView!=null)
+//                    mView.get().hideProgress(Constants.FINISH_LOGIN,"登录成功");
             }
         });
 

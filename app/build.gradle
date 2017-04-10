@@ -128,4 +128,6 @@ dependencies {
     compile project(':lib-baidu-asr')
     compile project(':lib-turing-nlp')
     compile project(':picture_library')
+    //Litepal 简易的SQLite操作库（基于ORM）
+    compile 'org.litepal.android:core:1.5.1'
 }

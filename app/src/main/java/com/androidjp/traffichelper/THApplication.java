@@ -1,9 +1,8 @@
 package com.androidjp.traffichelper;
 
-import android.app.Application;
 import android.content.Context;
 
-import com.androidjp.traffichelper.data.model.SharedPrefManager;
+import org.litepal.LitePalApplication;
 
 
 /**
@@ -11,7 +10,7 @@ import com.androidjp.traffichelper.data.model.SharedPrefManager;
  * Created by androidjp on 2016/12/1.
  */
 
-public class THApplication extends Application {
+public class THApplication extends LitePalApplication {
 
     private static THApplication sInstance;
 
@@ -27,6 +26,10 @@ public class THApplication extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+
+        ///创建一下数据库表
+//        SQLiteDatabase db = LitePal.getDatabase();
+//        db.close();
     }
 
 }

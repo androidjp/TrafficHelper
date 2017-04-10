@@ -64,21 +64,24 @@
         <!--            android:layerType="software"
 -->
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_below="@+id/title"
-            android:layout_toRightOf="@+id/line1"
-            >
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/line1"
+           >
+               <TextView
+                   android:id="@+id/content"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   tools:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"
+                   android:paddingLeft="6dp"
+                   android:paddingTop="6dp"
+                   android:paddingBottom="6dp"
+                   android:paddingRight="36dp"
+                   android:maxEms="16"
+                   />
 
-            <TextView
-                android:id="@+id/content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"
-                android:layout_margin="6dp"
-                />
-        </ScrollView>
+       </RelativeLayout>
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

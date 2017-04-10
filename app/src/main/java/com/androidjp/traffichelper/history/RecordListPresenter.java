@@ -7,25 +7,13 @@ import com.androidjp.traffichelper.THApplication;
 import com.androidjp.traffichelper.data.ServiceAPI;
 import com.androidjp.traffichelper.data.model.UserManager;
 import com.androidjp.traffichelper.data.model.retrofit.ServiceGenerator;
-import com.androidjp.traffichelper.data.pojo.Location;
 import com.androidjp.traffichelper.data.pojo.Record;
 import com.androidjp.traffichelper.data.pojo.RecordRes;
 import com.orhanobut.logger.Logger;
 
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-
 import java.lang.ref.SoftReference;
-import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.BackpressureStrategy;
-import io.reactivex.Flowable;
-import io.reactivex.FlowableEmitter;
-import io.reactivex.FlowableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -75,13 +63,14 @@ public class RecordListPresenter implements HistoryContract.Presenter {
         Call<Result<List<Record>>> call = recordAPI.queryRecordList(
                 UserManager.getInstance(THApplication.getContext()).getUserId()
                 , 0
-                , (this.currentCount>0?this.mView.get().getRecDataList().get(0).getRecord_id():null));
+                , (this.mView.get().getRecDataList().size()==0?0:this.mView.get().getRecDataList().get(0).record_time));
         call.enqueue(new Callback<Result<List<Record>>>() {
             @Override
             public void onResponse(Call<Result<List<Record>>> call, Response<Result<List<Record>>> response) {
                 if (response.body()!=null){
+                    Logger.d(response.body().toJsonString());
                     List<Record> list = response.body().data;
-                    if (list!=null || list.size()==0){
+                    if (list==null || list.size()==0){
                         ///无更新, 这时，mDataList无变化，mView只需要Show个SnackBar提示"无变化"即可
                         if (mView != null)
                             mView.get().refreshRecordList(0,null);
@@ -170,7 +159,7 @@ public class RecordListPresenter implements HistoryContract.Presenter {
         Call<Result<List<Record>>> call = recordAPI.queryRecordList(
                 UserManager.getInstance(THApplication.getContext()).getUserId()
                 , this.page
-                , (this.currentCount>0?this.mView.get().getRecDataList().get(this.currentCount-1).getRecord_id():null));
+                , (this.currentCount>0?this.mView.get().getRecDataList().get(this.currentCount-1).record_time:0));
         call.enqueue(new Callback<Result<List<Record>>>() {
             @Override
             public void onResponse(Call<Result<List<Record>>> call, Response<Result<List<Record>>> response) {
@@ -260,7 +249,7 @@ public class RecordListPresenter implements HistoryContract.Presenter {
             if (mView!=null)
                 mView.get().finishLoadDetail(pos,null);
         ServiceAPI.RecordAPI recordAPI = ServiceGenerator.createService(ServiceAPI.RecordAPI.class);
-        Call<Result<RecordRes>> call = recordAPI.getRecordDetail(UserManager.getInstance(THApplication.getContext()).getUserId(),record.getResult_id());
+        Call<Result<RecordRes>> call = recordAPI.getRecordDetail(record.getResult_id());
         call.enqueue(new Callback<Result<RecordRes>>() {
             @Override
             public void onResponse(Call<Result<RecordRes>> call, Response<Result<RecordRes>> response) {
@@ -276,7 +265,7 @@ public class RecordListPresenter implements HistoryContract.Presenter {
             @Override
             public void onFailure(Call<Result<RecordRes>> call, Throwable t) {
                 if (mView!=null)
-                    mView.get().loadFail("加载异常~");
+                    mView.get().loadFail("加载异常~ "+ t.getMessage());
             }
         });
     }

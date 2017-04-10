@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="traffic_helper_db"/>
+    <version value="1"/>
+
+    <!--所有的映射模型-->
+    <list>
+        <mapping class="com.androidjp.traffichelper.data.pojo.Dialogue"/>
+        <mapping class="com.androidjp.traffichelper.data.pojo.Record"/>
+        <mapping class="com.androidjp.traffichelper.data.pojo.RecordRes"/>
+        <mapping class="com.androidjp.traffichelper.data.pojo.Location"/>
+    </list>
+</litepal>

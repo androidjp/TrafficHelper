@@ -172,6 +172,7 @@ public class ConsultFragment extends Fragment implements ConsultContract.View, V
         } else {
             this.emptyView.setVisibility(View.INVISIBLE);
             this.mListAdapter.addList(list);
+            checkEmptyList();
         }
     }
 
