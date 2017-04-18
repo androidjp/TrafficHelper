@@ -93,6 +93,8 @@ public class LoginActivity extends SwipeBackActivity implements LoginContract.Vi
             }
         });
 
+        //设置swipebacklayout的底色
+        getSwipeBackLayout().setBackgroundResource(R.color.blue);
     }
 
     @Override
@@ -121,6 +123,7 @@ public class LoginActivity extends SwipeBackActivity implements LoginContract.Vi
 
         this.mPresenter.register(layoutEtUsernameLogin.getEditText().getText().toString()
                 , layoutEtPasswordLogin.getEditText().getText().toString()
+                , layoutEtPasswordRe.getEditText().getText().toString()
                 , layoutEtEmail.getEditText().getText().toString()
                 , layoutEtPhone.getEditText().getText().toString()
                 , (rbtnMale.isChecked() ? 0 : 1), layoutAge.getEditText().getText().toString());
@@ -218,17 +221,30 @@ public class LoginActivity extends SwipeBackActivity implements LoginContract.Vi
                 });
                 break;
             case Constants.FINISH_REGISTER:
+                clearAllInput();
                 mDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                 mDialog.setCancelable(false);
                 mDialog.setTitleText(msg).setConfirmText("回到登录页").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
                         sweetAlertDialog.dismissWithAnimation();
-                        showLoginPage();
+//                        showLoginPage();
+                        mPresenter.back();
                     }
                 });
                 break;
         }
+    }
+
+    /**
+     * 清空所有的输入
+     */
+    private void clearAllInput() {
+        this.layoutEtPasswordLogin.getEditText().setText("");
+        this.layoutEtEmail.getEditText().setText("");
+        this.layoutEtPasswordRe.getEditText().setText("");
+        this.layoutEtPhone.getEditText().setText("");
+        this.layoutEtUsernameLogin.getEditText().setText("");
     }
 
     @Override

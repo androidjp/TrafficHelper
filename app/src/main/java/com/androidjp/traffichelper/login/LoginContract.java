@@ -26,7 +26,7 @@ public class LoginContract {
         //登录
         void login(String userId, String password);
         //注册
-        void register(String userName, String password,String email ,String phone,int sex,String age);
+        void register(String userName, String password, String passwordRe,String email ,String phone,int sex,String age);
         //找回密码
         void findPwd(String userId);
         //true 表示可以直接退出本Activity， false 表示注册界面退回到登录界面

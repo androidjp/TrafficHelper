@@ -92,7 +92,8 @@
                 android:background="@null"
                 android:padding="6dp"
                 app:counterEnabled="true"
-                app:counterMaxLength="16">
+                app:counterMaxLength="30"
+                >
 
                 <com.androidjp.lib_custom_view.edittext.ClearEditText
                     android:layout_width="match_parent"

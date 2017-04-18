@@ -5,6 +5,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.androidjp.lib_common_util.data.encryption.MD5Util;
 import com.androidjp.lib_common_util.pojo.network.Result;
 import com.androidjp.traffichelper.R;
 import com.androidjp.traffichelper.THApplication;
@@ -63,7 +64,8 @@ public class LoginPresenter implements LoginContract.Presenter {
 //        ServiceAPI.LoginAPI loginAPI = loginRetro.create(ServiceAPI.LoginAPI.class);
 //        Call<Result<User>> call = loginAPI.login(userId,password);
         ServiceAPI.LoginAPI loginAPI = ServiceGenerator.createService(ServiceAPI.LoginAPI.class);
-        Call<Result<User>> call = loginAPI.login(userId, password);
+//        Call<Result<User>> call = loginAPI.login(userId, password);
+        Call<Result<User>> call = loginAPI.login(userId, MD5Util.md5(password));
         Logger.i("获取Call对象， 开始登录请求");
         call.enqueue(new Callback<Result<User>>() {
             @Override
@@ -80,6 +82,12 @@ public class LoginPresenter implements LoginContract.Presenter {
                         if (mView != null)
                             mView.get().hideProgress(Constants.FINISH_LOGIN, "登录完成");
                         ok = true;
+                    }else{
+                        if (!TextUtils.isEmpty(res.msg)){
+                            if(mView!=null)
+                                mView.get().hideProgress(Constants.FAIL_LOGIN,"登录失败，"+res.msg);
+                            ok = true;
+                        }
                     }
                 }
                 if (!ok && mView != null)
@@ -100,7 +108,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
 
     @Override
-    public void register(String userName, String password, String email, String phone, int sex , String age) {
+    public void register(String userName, String password, String passwordRe, String email, String phone, int sex , String age) {
 
         if (this.isCurrentLoginPage){
             this.mView.get().showRegisterPage();
@@ -111,13 +119,19 @@ public class LoginPresenter implements LoginContract.Presenter {
                 mView.get().showErrorMsg("年龄未填！！");
                 return;
             }
+            if (TextUtils.isEmpty(password)||TextUtils.isEmpty(passwordRe))
+                mView.get().showErrorMsg("密码未输入");
+            if (!TextUtils.equals(password,passwordRe))
+                mView.get().showErrorMsg("两次输入密码不一致！");
+
             this.mView.get().showProgress("正在注册。。");
             User user = new User();
             user.setEmail(email);
             user.setPhone(phone);
             user.setSex(sex);
             user.setUser_name(userName);
-            user.setUser_pwd(password);
+//            user.setUser_pwd(password);
+            user.setUser_pwd(MD5Util.md5(password));
             user.setAge(Integer.valueOf(age));
             //TODO：访问服务器，注册请求，并让界面显示进度条
             ///使用Retrofit2进行登录请求
@@ -136,6 +150,10 @@ public class LoginPresenter implements LoginContract.Presenter {
                             if (mView != null)
                                 mView.get().hideProgress(Constants.FINISH_REGISTER, "注册完成");
                             ok = true;
+                        }else{
+                            if (mView!=null)
+                                mView.get().hideProgress(Constants.FAIL_REGUSTER,"注册失败，"+res.data);
+                            ok = true;
                         }
                     }
                     if (!ok && mView != null)
@@ -144,11 +162,11 @@ public class LoginPresenter implements LoginContract.Presenter {
 
                 @Override
                 public void onFailure(Call<Result<String>> call, Throwable t) {
-//                    Logger.e("注册 onFailure(),"+ t.getMessage());
-//                    if (mView != null)
-//                        mView.get().hideProgress(Constants.FAIL_REGUSTER, "注册异常");
-                    if (mView!=null)
-                        mView.get().hideProgress(Constants.FINISH_REGISTER,"注册成功");
+                    Logger.e("注册 onFailure(),"+ t.getMessage());
+                    if (mView != null)
+                        mView.get().hideProgress(Constants.FAIL_REGUSTER, "注册异常");
+//                    if (mView!=null)
+//                        mView.get().hideProgress(Constants.FINISH_REGISTER,"注册成功");
                 }
             });
         }

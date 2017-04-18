@@ -36,7 +36,8 @@ public class BaseSubActivity extends SwipeBackActivity {
         initToolbar();
         ///配置 滑动返回（SwipeBack） 相关操作
         setDragEdge(SwipeBackLayout.DragEdge.LEFT);
-
+        //设置swipebacklayout的底色
+        getSwipeBackLayout().setBackgroundResource(R.color.blue);
     }
 
     private void initToolbar() {
