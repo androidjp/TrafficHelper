@@ -10,8 +10,8 @@ import com.androidjp.lib_great_recyclerview.base.OnItemClickListener;
 import com.androidjp.traffichelper.R;
 import com.androidjp.traffichelper.data.ServiceAPI;
 import com.androidjp.traffichelper.data.model.UserManager;
+import com.androidjp.traffichelper.data.model.glide.GlideCircleTransform;
 import com.androidjp.traffichelper.data.pojo.Dialogue;
-import com.androidjp.traffichelper.home.view.GlideCircleTransform;
 import com.bumptech.glide.Glide;
 
 import butterknife.Bind;
@@ -49,6 +49,7 @@ public class QuestionHolder extends BaseViewHolder<Dialogue> {
                     .placeholder(R.drawable.load)//占位符 也就是加载中的图片，可放个gif
                     .error(R.mipmap.ic_launcher)//失败图片
                     .crossFade(1000) // 图片淡入效果：可设置时长，默认“300ms”
+                    .transform(new GlideCircleTransform(getContext()))
                     .into(ivUserPic);
         tvUserWord.setText(itemValue.word);
     }

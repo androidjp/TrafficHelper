@@ -19,9 +19,9 @@ import com.orhanobut.logger.Logger;
 
 import java.lang.ref.SoftReference;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Login界面 Presenter实现类
@@ -40,7 +40,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
 
     public LoginPresenter( Context mContext,LoginContract.View view) {
-        this.mView = new SoftReference<LoginContract.View>(view);
+        this.mView = new SoftReference<>(view);
         this.mContext = mContext;
     }
 
@@ -57,53 +57,40 @@ public class LoginPresenter implements LoginContract.Presenter {
         this.mView.get().showProgress("正在登录。。");
 
         ///使用Retrofit2进行登录请求
-//        Retrofit loginRetro = new Retrofit.Builder()
-//                .baseUrl((ServiceAPI.IS_DEBUG?ServiceAPI.SERVER_HOST:ServiceAPI.REMOTE_SERVER_HOST))
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//        ServiceAPI.LoginAPI loginAPI = loginRetro.create(ServiceAPI.LoginAPI.class);
-//        Call<Result<User>> call = loginAPI.login(userId,password);
         ServiceAPI.LoginAPI loginAPI = ServiceGenerator.createService(ServiceAPI.LoginAPI.class);
 //        Call<Result<User>> call = loginAPI.login(userId, password);
-        Call<Result<User>> call = loginAPI.login(userId, MD5Util.md5(password));
+        ///TODO:  retrofit + RxJava的请求方式
+        Flowable<Result<User>> flowable = loginAPI.login(userId, MD5Util.md5(password));
         Logger.i("获取Call对象， 开始登录请求");
-        call.enqueue(new Callback<Result<User>>() {
-            @Override
-            public void onResponse(Call<Result<User>> call, Response<Result<User>> response) {
-                Result<User> res = response.body();
-                boolean ok = false;
-                Log.e("res是否为null？","NULL？："+(res==null));
-                Logger.d("onResponse() 内部：res = " + (res==null?null:res.toString()));
-                if (res != null) {
-                    User user = res.data;
-                    if (user!=null){
-                        ///TODO: 存储进SPF文件中，并保存UserManager
-                        UserManager.getInstance(THApplication.getContext()).refreshUser(user);
-                        if (mView != null)
-                            mView.get().hideProgress(Constants.FINISH_LOGIN, "登录完成");
-                        ok = true;
-                    }else{
-                        if (!TextUtils.isEmpty(res.msg)){
-                            if(mView!=null)
-                                mView.get().hideProgress(Constants.FAIL_LOGIN,"登录失败，"+res.msg);
+        flowable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(userResult -> {
+                    boolean ok = false;
+                    Log.e("res是否为null？", "NULL？：" + (userResult == null));
+                    Logger.d("onResponse() 内部：userResult = " + (userResult == null ? null : userResult.toString()));
+                    if (userResult != null) {
+                        User user = userResult.data;
+                        if (user != null) {
+                            ///TODO: 存储进SPF文件中，并保存UserManager
+                            UserManager.getInstance(THApplication.getContext()).refreshUser(user);
+                            if (mView != null)
+                                mView.get().hideProgress(Constants.FINISH_LOGIN, "登录完成");
                             ok = true;
+                        } else {
+                            if (!TextUtils.isEmpty(userResult.msg)) {
+                                if (mView != null)
+                                    mView.get().hideProgress(Constants.FAIL_LOGIN, "登录失败，" + userResult.msg);
+                                ok = true;
+                            }
                         }
                     }
-                }
-                if (!ok && mView != null)
-                    mView.get().hideProgress(Constants.FAIL_LOGIN, "登录失败");
-            }
-
-            @Override
-            public void onFailure(Call<Result<User>> call, Throwable t) {
-                Logger.e(t.toString());
-                if (mView != null)
-                    mView.get().hideProgress(Constants.FAIL_LOGIN, "登录异常");
-//                if (mView!=null)
-//                    mView.get().hideProgress(Constants.FINISH_LOGIN,"登录成功");
-            }
-        });
-
+                    if (!ok && mView != null)
+                        mView.get().hideProgress(Constants.FAIL_LOGIN, "登录失败");
+                }, throwable -> {
+                    Logger.e(throwable.toString());
+                    if (mView != null)
+                        mView.get().hideProgress(Constants.FAIL_LOGIN, "登录异常");
+                });
     }
 
 
@@ -136,39 +123,30 @@ public class LoginPresenter implements LoginContract.Presenter {
             //TODO：访问服务器，注册请求，并让界面显示进度条
             ///使用Retrofit2进行登录请求
             ServiceAPI.LoginAPI loginAPI = ServiceGenerator.createService(ServiceAPI.LoginAPI.class);
-            Call<Result<String>> call = loginAPI.register(user.getFieldMap());
-
-            call.enqueue(new Callback<Result<String>>() {
-
-                @Override
-                public void onResponse(Call<Result<String>> call, Response<Result<String>> response) {
-                    Logger.d("注册 onResponse()");
-                    Result<String> res = response.body();
-                    boolean ok = false;
-                    if (res != null) {
-                        if (res.code==200 && res.msg.equals("success")){
-                            if (mView != null)
-                                mView.get().hideProgress(Constants.FINISH_REGISTER, "注册完成");
-                            ok = true;
-                        }else{
-                            if (mView!=null)
-                                mView.get().hideProgress(Constants.FAIL_REGUSTER,"注册失败，"+res.data);
-                            ok = true;
+            Flowable<Result<String>> call = loginAPI.register(user.getFieldMap());
+            call.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(stringResult -> {
+                        Logger.d("注册 onResponse()");
+                        boolean ok = false;
+                        if (stringResult != null) {
+                            if (stringResult.code == 200 && stringResult.msg.equals("success")) {
+                                if (mView != null)
+                                    mView.get().hideProgress(Constants.FINISH_REGISTER, "注册完成");
+                                ok = true;
+                            } else {
+                                if (mView != null)
+                                    mView.get().hideProgress(Constants.FAIL_REGUSTER, "注册失败，" + stringResult.data);
+                                ok = true;
+                            }
                         }
-                    }
-                    if (!ok && mView != null)
-                        mView.get().hideProgress(Constants.FAIL_REGUSTER, "注册失败");
-                }
-
-                @Override
-                public void onFailure(Call<Result<String>> call, Throwable t) {
-                    Logger.e("注册 onFailure(),"+ t.getMessage());
-                    if (mView != null)
-                        mView.get().hideProgress(Constants.FAIL_REGUSTER, "注册异常");
-//                    if (mView!=null)
-//                        mView.get().hideProgress(Constants.FINISH_REGISTER,"注册成功");
-                }
-            });
+                        if (!ok && mView != null)
+                            mView.get().hideProgress(Constants.FAIL_REGUSTER, "注册失败");
+                    }, throwable -> {
+                        Logger.e("注册 onFailure(),"+ throwable.getMessage());
+                        if (mView != null)
+                            mView.get().hideProgress(Constants.FAIL_REGUSTER, "注册异常");
+                    });
         }
     }
 

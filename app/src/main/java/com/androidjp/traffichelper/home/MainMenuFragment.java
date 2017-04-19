@@ -15,9 +15,9 @@ import android.widget.TextView;
 
 import com.androidjp.traffichelper.R;
 import com.androidjp.traffichelper.data.ServiceAPI;
+import com.androidjp.traffichelper.data.model.glide.GlideCircleTransform;
 import com.androidjp.traffichelper.data.pojo.User;
 import com.androidjp.traffichelper.history.HistoryActivity;
-import com.androidjp.traffichelper.home.view.GlideCircleTransform;
 import com.androidjp.traffichelper.login.LoginActivity;
 import com.androidjp.traffichelper.settings.SettingsActivity;
 import com.androidjp.traffichelper.user.UserActivity;
@@ -139,6 +139,7 @@ public class MainMenuFragment extends Fragment implements MainMenuContract.View,
                     .placeholder(R.drawable.load)//占位符 也就是加载中的图片，可放个gif
                     .error(R.mipmap.ic_launcher)//失败图片
                     .crossFade(1000) // 图片淡入效果：可设置时长，默认“300ms”
+                    .transform(new GlideCircleTransform(getActivity()))
                     .into(ivUserPic);
             if (user.getUser_id()!=null){
                 if (user.getUser_name()!=null)

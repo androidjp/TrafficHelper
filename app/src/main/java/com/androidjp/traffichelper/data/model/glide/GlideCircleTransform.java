@@ -1,4 +1,4 @@
-package com.androidjp.traffichelper.home.view;
+package com.androidjp.traffichelper.data.model.glide;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,6 +9,9 @@ import android.graphics.Paint;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
+/**
+ * Glide 圆角图片转换类
+ */
 public class GlideCircleTransform extends BitmapTransformation {
     public GlideCircleTransform(Context context) {
         super(context);
@@ -19,7 +22,10 @@ public class GlideCircleTransform extends BitmapTransformation {
         return circleCrop(pool, toTransform);
     }
 
-    private static Bitmap circleCrop(BitmapPool pool, Bitmap source) {
+    /**
+     * 圆角图片裁剪（对象是Bitmap类型）
+     */
+    private Bitmap circleCrop(BitmapPool pool, Bitmap source) {
         if (source == null) return null;
         int size = Math.min(source.getWidth(), source.getHeight());
         int x = (source.getWidth() - size) / 2;

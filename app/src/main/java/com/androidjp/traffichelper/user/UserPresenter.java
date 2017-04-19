@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.androidjp.lib_common_util.data.StringRandomUtil;
 import com.androidjp.lib_common_util.pojo.network.Result;
 import com.androidjp.traffichelper.THApplication;
 import com.androidjp.traffichelper.data.ServiceAPI;
@@ -21,12 +20,12 @@ import java.io.UnsupportedEncodingException;
 import java.lang.ref.SoftReference;
 import java.util.List;
 
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * UserPresenter
@@ -84,24 +83,24 @@ public class UserPresenter implements UserContract.Presenter {
         //user_id
         // MediaType.parse("multipart/form-data")
         RequestBody requestUserId = RequestBody.create(MediaType.parse("multipart/form-data"),UserManager.getInstance(THApplication.getContext()).getUserId());
-        Call<Result<User>> call = userAPI.updateUserPic(requestUserId,body);
-        call.enqueue(new Callback<Result<User>>() {
-            @Override
-            public void onResponse(Call<Result<User>> call, Response<Result<User>> response) {
-                Result<User> result = response.body();
-                if (result!=null && result.data!=null){
-                    UserManager.getInstance(THApplication.getContext()).refreshUser(result.data);
+        Flowable<Result<User>> call = userAPI.updateUserPic(requestUserId,body);
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(userResult -> {
+                    if (userResult == null) {
+                        if (mView != null)
+                            mView.get().finishLoad(null);
+                    } else {
+                        User user = userResult.data;
+                        if (user != null)
+                            UserManager.getInstance(THApplication.getContext()).refreshUser(user);
+                        if (mView != null)
+                            mView.get().finishLoad(user);
+                    }
+                }, throwable -> {
                     if (mView!=null)
-                        mView.get().finishLoad(result.data);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Result<User>> call, Throwable t) {
-                if (mView!=null)
-                    mView.get().finishLoad(null);
-            }
-        });
+                        mView.get().finishLoad(null);
+                });
     }
 
 
@@ -122,53 +121,52 @@ public class UserPresenter implements UserContract.Presenter {
         }
 
         ServiceAPI.UserAPI userAPI = ServiceGenerator.createService(ServiceAPI.UserAPI.class);
-        Call<Result<User>> call = userAPI.updateUserName(UserManager.getInstance(THApplication.getContext()).getUserId(),newName);
-        call.enqueue(new Callback<Result<User>>() {
-            @Override
-            public void onResponse(Call<Result<User>> call, Response<Result<User>> response) {
-                Result<User> result = response.body();
-                if (result!=null && result.data!=null){
-                    UserManager.getInstance(THApplication.getContext()).refreshUser(result.data);
+        Flowable<Result<User>> call = userAPI.updateUserName(UserManager.getInstance(THApplication.getContext()).getUserId(),newName);
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(userResult -> {
+                    if (userResult == null) {
+                        if (mView != null)
+                            mView.get().finishLoad(null);
+                    } else {
+                        User user = userResult.data;
+                        if (user != null)
+                            UserManager.getInstance(THApplication.getContext()).refreshUser(user);
+                        if (mView != null)
+                            mView.get().finishLoad(user);
+                    }
+                }, throwable -> {
                     if (mView!=null)
-                        mView.get().finishLoad(result.data);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Result<User>> call, Throwable t) {
-                if (mView!=null)
-                    mView.get().finishLoad(null);
-            }
-        });
+                        mView.get().finishLoad(null);
+                });
     }
 
     @Override
     public void modifyPhone(String newPhone) {
         if (TextUtils.isEmpty(newPhone))
             return;
-        if (mView!=null)
+        if (mView != null)
             mView.get().loading();
         ServiceAPI.UserAPI userAPI = ServiceGenerator.createService(ServiceAPI.UserAPI.class);
-        Call<Result<User>> call = userAPI.updatePhone(UserManager.getInstance(THApplication.getContext()).getUserId(),newPhone);
-        call.enqueue(new Callback<Result<User>>() {
-            @Override
-            public void onResponse(Call<Result<User>> call, Response<Result<User>> response) {
-                Result<User> result = response.body();
-                if (result!=null && result.data!=null){
-                    UserManager.getInstance(THApplication.getContext()).refreshUser(result.data);
-                    if (mView!=null)
-                        mView.get().finishLoad(result.data);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Result<User>> call, Throwable t) {
-                if (mView!=null)
-                    mView.get().finishLoad(null);
-            }
-        });
+        Flowable<Result<User>> call = userAPI.updatePhone(UserManager.getInstance(THApplication.getContext()).getUserId(), newPhone);
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(userResult -> {
+                    if (userResult == null) {
+                        if (mView != null)
+                            mView.get().finishLoad(null);
+                    } else {
+                        User user = userResult.data;
+                        if (user != null)
+                            UserManager.getInstance(THApplication.getContext()).refreshUser(user);
+                        if (mView != null)
+                            mView.get().finishLoad(user);
+                    }
+                }, throwable -> {
+                    if (mView != null)
+                        mView.get().finishLoad(null);
+                });
     }
-
     @Override
     public void modifyEmail(String newEmail) {
         if (TextUtils.isEmpty(newEmail))
@@ -176,24 +174,24 @@ public class UserPresenter implements UserContract.Presenter {
         if (mView!=null)
             mView.get().loading();
         ServiceAPI.UserAPI userAPI = ServiceGenerator.createService(ServiceAPI.UserAPI.class);
-        Call<Result<User>> call = userAPI.updateEmail(UserManager.getInstance(THApplication.getContext()).getUserId(),newEmail);
-        call.enqueue(new Callback<Result<User>>() {
-            @Override
-            public void onResponse(Call<Result<User>> call, Response<Result<User>> response) {
-                Result<User> result = response.body();
-                if (result!=null && result.data!=null){
-                    UserManager.getInstance(THApplication.getContext()).refreshUser(result.data);
+        Flowable<Result<User>> call = userAPI.updateEmail(UserManager.getInstance(THApplication.getContext()).getUserId(),newEmail);
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(userResult -> {
+                    if (userResult == null) {
+                        if (mView != null)
+                            mView.get().finishLoad(null);
+                    } else {
+                        User user = userResult.data;
+                        if (user != null)
+                            UserManager.getInstance(THApplication.getContext()).refreshUser(user);
+                        if (mView != null)
+                            mView.get().finishLoad(user);
+                    }
+                }, throwable -> {
                     if (mView!=null)
-                        mView.get().finishLoad(result.data);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Result<User>> call, Throwable t) {
-                if (mView!=null)
-                    mView.get().finishLoad(null);
-            }
-        });
+                        mView.get().finishLoad(null);
+                });
     }
 
     @Override
@@ -201,24 +199,24 @@ public class UserPresenter implements UserContract.Presenter {
         if (mView!=null)
             mView.get().loading();
         ServiceAPI.UserAPI userAPI = ServiceGenerator.createService(ServiceAPI.UserAPI.class);
-        Call<Result<User>> call = userAPI.updateAge(UserManager.getInstance(THApplication.getContext()).getUserId(),age);
-        call.enqueue(new Callback<Result<User>>() {
-            @Override
-            public void onResponse(Call<Result<User>> call, Response<Result<User>> response) {
-                Result<User> result = response.body();
-                if (result!=null && result.data!=null){
-                    UserManager.getInstance(THApplication.getContext()).refreshUser(result.data);
-                    if (mView!=null)
-                        mView.get().finishLoad(result.data);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Result<User>> call, Throwable t) {
-                if (mView!=null)
-                    mView.get().finishLoad(null);
-            }
-        });
+        Flowable<Result<User>> call = userAPI.updateAge(UserManager.getInstance(THApplication.getContext()).getUserId(),age);
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(userResult -> {
+                    if (userResult == null) {
+                        if (mView != null)
+                            mView.get().finishLoad(null);
+                    } else {
+                        User user = userResult.data;
+                        if (user != null)
+                            UserManager.getInstance(THApplication.getContext()).refreshUser(user);
+                        if (mView != null)
+                            mView.get().finishLoad(user);
+                    }
+                }, throwable -> {
+                        if (mView!=null)
+                            mView.get().finishLoad(null);
+                });
     }
 
     @Override
@@ -226,24 +224,24 @@ public class UserPresenter implements UserContract.Presenter {
         if (mView!=null)
             mView.get().loading();
         ServiceAPI.UserAPI userAPI = ServiceGenerator.createService(ServiceAPI.UserAPI.class);
-        Call<Result<User>> call = userAPI.updateSex(UserManager.getInstance(THApplication.getContext()).getUserId(),Integer.valueOf(sex));
-        call.enqueue(new Callback<Result<User>>() {
-            @Override
-            public void onResponse(Call<Result<User>> call, Response<Result<User>> response) {
-                Result<User> result = response.body();
-                if (result!=null && result.data!=null){
-                    UserManager.getInstance(THApplication.getContext()).refreshUser(result.data);
+        Flowable<Result<User>> call = userAPI.updateSex(UserManager.getInstance(THApplication.getContext()).getUserId(),Integer.valueOf(sex));
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(userResult -> {
+                    if (userResult == null) {
+                        if (mView != null)
+                            mView.get().finishLoad(null);
+                    } else {
+                        User user = userResult.data;
+                        if (user != null)
+                            UserManager.getInstance(THApplication.getContext()).refreshUser(user);
+                        if (mView != null)
+                            mView.get().finishLoad(user);
+                    }
+                }, throwable -> {
                     if (mView!=null)
-                        mView.get().finishLoad(result.data);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Result<User>> call, Throwable t) {
-                if (mView!=null)
-                    mView.get().finishLoad(null);
-            }
-        });
+                        mView.get().finishLoad(null);
+                });
     }
 
     @Override
@@ -253,24 +251,24 @@ public class UserPresenter implements UserContract.Presenter {
         if (mView!=null)
             mView.get().loading();
         ServiceAPI.UserAPI userAPI = ServiceGenerator.createService(ServiceAPI.UserAPI.class);
-        Call<Result<User>> call = userAPI.updateUserPwd(UserManager.getInstance(THApplication.getContext()).getUserId(),pwd);
-        call.enqueue(new Callback<Result<User>>() {
-            @Override
-            public void onResponse(Call<Result<User>> call, Response<Result<User>> response) {
-                Result<User> result = response.body();
-                if (result!=null && result.data!=null){
-                    UserManager.getInstance(THApplication.getContext()).refreshUser(result.data);
+        Flowable<Result<User>> call = userAPI.updateUserPwd(UserManager.getInstance(THApplication.getContext()).getUserId(),pwd);
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(userResult -> {
+                    if (userResult == null) {
+                        if (mView != null)
+                            mView.get().finishLoad(null);
+                    } else {
+                        User user = userResult.data;
+                        if (user != null)
+                            UserManager.getInstance(THApplication.getContext()).refreshUser(user);
+                        if (mView != null)
+                            mView.get().finishLoad(user);
+                    }
+                }, throwable -> {
                     if (mView!=null)
-                        mView.get().finishLoad(result.data);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Result<User>> call, Throwable t) {
-                if (mView!=null)
-                    mView.get().finishLoad(null);
-            }
-        });
+                        mView.get().finishLoad(null);
+                });
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.androidjp.traffichelper.data.pojo.User;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Flowable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -60,12 +61,12 @@ public class ServiceAPI {
         ///登录
         @POST(LOGIN_PATH)
         @FormUrlEncoded
-        Call<Result<User>> login(@Field("user_id") String user_id, @Field("user_pwd") String password);
+        Flowable<Result<User>> login(@Field("user_id") String user_id, @Field("user_pwd") String password);
 
         ///注册
         @POST(REGISTER_PATH)
         @FormUrlEncoded
-        Call<Result<String>> register(@FieldMap Map<String,String> userMsgMap);
+        Flowable<Result<String>> register(@FieldMap Map<String,String> userMsgMap);
     }
 
     public interface UserAPI{
@@ -73,37 +74,37 @@ public class ServiceAPI {
 
         @POST(USER_MANAGER_PATH)
         @FormUrlEncoded
-        Call<Result<User>> updateUserName(@Field("user_id") String user_id, @Field(value="user_name",encoded=true) String userName);
+        Flowable<Result<User>> updateUserName(@Field("user_id") String user_id, @Field(value="user_name",encoded=true) String userName);
 
 //        @POST(USER_MANAGER_PATH)
-//        Call<Result<User>>> updateUserPic(@Field("user_id") String user_id, @Field("user_pic") String userPic);
+//        Flowable<Result<User>>> updateUserPic(@Field("user_id") String user_id, @Field("user_pic") String userPic);
 
 
 
         //原来 鸿洋的做法
         @Multipart
         @POST(USER_PIC_UPLOAD_PATH_TEST)
-        Call<Result<User>> updateUserPic(@Part("user_id") RequestBody user_id, @Part MultipartBody.Part file);
+        Flowable<Result<User>> updateUserPic(@Part("user_id") RequestBody user_id, @Part MultipartBody.Part file);
 
         @POST(USER_MANAGER_PATH)
         @FormUrlEncoded
-        Call<Result<User>> updateUserPwd(@Field("user_id") String user_id, @Field("user_pwd") String user_pwd);
+        Flowable<Result<User>> updateUserPwd(@Field("user_id") String user_id, @Field("user_pwd") String user_pwd);
 
         @POST(USER_MANAGER_PATH)
         @FormUrlEncoded
-        Call<Result<User>> updateEmail(@Field("user_id") String user_id, @Field("email") String EMAIL);
+        Flowable<Result<User>> updateEmail(@Field("user_id") String user_id, @Field("email") String EMAIL);
 
         @POST(USER_MANAGER_PATH)
         @FormUrlEncoded
-        Call<Result<User>> updateAge(@Field("user_id") String user_id, @Field("age") int age);
+        Flowable<Result<User>> updateAge(@Field("user_id") String user_id, @Field("age") int age);
 
         @POST(USER_MANAGER_PATH)
         @FormUrlEncoded
-        Call<Result<User>> updatePhone(@Field("user_id") String user_id, @Field("phone") String phone);
+        Flowable<Result<User>> updatePhone(@Field("user_id") String user_id, @Field("phone") String phone);
 
         @POST(USER_MANAGER_PATH)
         @FormUrlEncoded
-        Call<Result<User>> updateSex(@Field("user_id") String user_id, @Field("sex") int sex);
+        Flowable<Result<User>> updateSex(@Field("user_id") String user_id, @Field("sex") int sex);
 
     }
 
@@ -111,14 +112,14 @@ public class ServiceAPI {
     public interface RecordAPI {
         ///上传一个计算记录，并返回得到一个计算结果
         @POST(RECORD_ADD_PATH)
-        Call<Result<RecordRes>> addRecord(@Body Record record);
+        Flowable<Result<RecordRes>> addRecord(@Body Record record);
         // 参数： user_id + 当前请求页 + （如果是下拉刷新，则获取新增的record 列表，此时需要本地的第一个pos的record_id ，以确定是否有新的record产生）
         @POST(RECORD_QUERY_PATH)
         @FormUrlEncoded
-        Call<Result<List<Record>>> queryRecordList(@Field(Constants.USER_ID)String user_id, @Field(Constants.PAGE)int page ,@Field(Constants.RECORD_TIME) long record_time);
+        Flowable<Result<List<Record>>> queryRecordList(@Field(Constants.USER_ID)String user_id, @Field(Constants.PAGE)int page ,@Field(Constants.RECORD_TIME) long record_time);
         @POST(RECORD_DETAIL_PATH)
         @FormUrlEncoded
-        Call<Result<RecordRes>> getRecordDetail(@Field(Constants.RESULT_ID) String result_id);
+        Flowable<Result<RecordRes>> getRecordDetail(@Field(Constants.RESULT_ID) String result_id);
     }
 
 

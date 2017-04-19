@@ -16,6 +16,7 @@ import com.androidjp.lib_common_util.system.KeyBoardUtil;
 import com.androidjp.lib_common_util.ui.SnackUtil;
 import com.androidjp.traffichelper.R;
 import com.androidjp.traffichelper.data.ServiceAPI;
+import com.androidjp.traffichelper.data.model.glide.GlideCircleTransform;
 import com.androidjp.traffichelper.data.pojo.User;
 import com.bumptech.glide.Glide;
 
@@ -111,6 +112,7 @@ public class UserFragment extends Fragment implements UserContract.View, View.On
                 .placeholder(R.drawable.load)//占位符 也就是加载中的图片，可放个gif
                 .error(R.mipmap.ic_launcher)//失败图片
                 .crossFade(1000) // 图片淡入效果：可设置时长，默认“300ms”
+                .transform(new GlideCircleTransform(getActivity()))
                 .into(ivUserPic);
         tvUsername.setText(user.getUser_name());
         tvEmail.setText(user.getEmail());
